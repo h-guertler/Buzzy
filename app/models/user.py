@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-
+from sqlalchemy.orm import relationship
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -18,8 +18,8 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     events = db.relationship('Event', back_populates='owner', foreign_keys='Event.owner_id')
-    event_favorites = db.relationship('Event_Favorite', back_populates='user')
-    event_images = db.relationship('Event_Image', back_populates='user')
+    event_favorites = db.relationship('Event_Favorite', back_populates='user', foreign_keys='Event_Favorite.user_id')
+    event_images = db.relationship('Event_Image', back_populates='user', foreign_keys='Event_Image.user_id')
 
     @property
     def password(self):
