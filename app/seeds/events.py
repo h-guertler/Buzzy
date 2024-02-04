@@ -26,7 +26,7 @@ def seed_events():
         description="it's all in the name",
         location="123 residential st, anywhere, usa",
         date_hosted="2025-12-31 21:00:00.000000",
-        attendees=[],
+        attendees=[2],
         tags=[],
         private=True)
 
