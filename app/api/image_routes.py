@@ -8,29 +8,30 @@ image_routes = Blueprint('images', __name__)
 @image_routes.route('/<int:id>', methods=['PUT', 'DELETE'])
 @login_required
 def handle_event_image(id):
+    print("top of the route")
     image = Event_Image.query.get(id)
 
     # Returns a 404 error if there is no event_image with the specified ID
     if not image:
-        error = "Event image with the specified ID could not be found"
+        error = 'Event image with the specified ID could not be found'
         return error, 404
 
     # Returns a 403 error if the event_image does not belong to the logged in user
     if image and not image.user_id == current_user.id:
-        error = "You are not authorized to access this resource"
+        error = 'You are not authorized to access this resource'
         return error, 401
 
 
     if request.method == 'PUT':
-        new_url = request.json.get("url", None)
+        new_url = request.json.get('url', None)
 
         # Backend validation
         validation_errors = {}
 
         if new_url is None:
-            validation_errors["url"] = "Please provide an image URL"
-        elif not new_url.lower().endswith((".jpg", ".jpeg")):
-            validation_errors["url"] = "Image URL must end in .jpg or .jpeg"
+            validation_errors['url'] = 'Please provide an image URL'
+        elif not new_url.lower().endswith(('.jpg', '.jpeg')):
+            validation_errors['url'] = 'Image URL must end in .jpg or .jpeg'
 
         if validation_errors:
             return validation_errors, 500
@@ -44,3 +45,11 @@ def handle_event_image(id):
         # Retrieves and returns the updated event_image
         updated_image = Event_Image.query.get(id)
         return updated_image.to_dict()
+
+    # Handles image deletion
+    if request.method == 'DELETE':
+        print("this is the route")
+        db.session.delete(image)
+        db.session.commit()
+        success_msg = { "Success": "Image has been removed" }
+        return success_msg, 200
