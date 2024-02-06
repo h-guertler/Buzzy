@@ -8,7 +8,6 @@ image_routes = Blueprint('images', __name__)
 @image_routes.route('/<int:id>', methods=['PUT', 'DELETE'])
 @login_required
 def handle_event_image(id):
-    print("top of the route")
     image = Event_Image.query.get(id)
 
     # Returns a 404 error if there is no event_image with the specified ID
@@ -48,7 +47,6 @@ def handle_event_image(id):
 
     # Handles image deletion
     if request.method == 'DELETE':
-        print("this is the route")
         db.session.delete(image)
         db.session.commit()
         success_msg = { "Success": "Image has been removed" }
