@@ -102,7 +102,7 @@ def get_event_images(id):
         msg = { "error": "You are unauthorized to view this resource" }
         return msg, 401
 
-# Creates a new even
+# Creates a new event
 @event_routes.route('/new', methods=["POST"])
 @login_required
 def create_event():
