@@ -101,3 +101,36 @@ def get_event_images(id):
     else:
         msg = { "error": "You are unauthorized to view this resource" }
         return msg, 401
+
+
+# View an event
+@event_routes.route('/<int:id>')
+def get_event(id):
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = None
+
+    # Exits with status 404 if no event with the ID in the URL exists
+    event = Event.query.get(id)
+    if not event:
+        error = { "error": "Event with the specified id does not exist" }
+        return error, 404
+
+    # Determines whether user is authorized to view the event
+    authorized = False
+
+    if event.private == False:
+        authorized = True
+    elif event.owner_id == user_id:
+        authorized = True
+    elif user_id in event.attendees:
+        authorized = True
+
+    if authorized == False:
+        message = "You are not authorized to view this resource"
+        return message, 401
+
+    # Returns the event if it's found and the user is authorized to view it
+    else:
+        return event.to_dict()
