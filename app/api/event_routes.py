@@ -102,6 +102,53 @@ def get_event_images(id):
         msg = { "error": "You are unauthorized to view this resource" }
         return msg, 401
 
+# Creates a new even
+@event_routes.route('/new', methods=["POST"])
+@login_required
+def create_event():
+    user_id = current_user.id
+    name = request.json.get('name', None)
+    description = request.json.get('description', None)
+    date_hosted = request.json.get('date_hosted', None)
+    location = request.json.get('location', None)
+    attendees = request.json.get('attendees', [])
+    tags = request.json.get('tags', [])
+    private = request.json.get('private', None)
+
+    # Backend validation
+    validation_errors = {}
+
+    if name is None:
+        validation_errors["name"] = "Please provide a name"
+    if description is None or len(description) < 10 or len(description) > 255:
+        validation_errors["description"] = "Please provide a description between 10 and 255 characters"
+    if location is None:
+        validation_errors["location"] = "Please provide a location"
+    if date_hosted is None:
+        validation_errors["date_hosted"] = "Please provide a date"
+    if private is None:
+        validation_errors["privacy"] = "Please select a privacy setting"
+
+    if validation_errors:
+        return validation_errors, 500
+
+    # Creates the event and returns it upon successful creation
+    event = Event(
+        owner_id= user_id,
+        name=name,
+        description=description,
+        location=location,
+        date_hosted=date_hosted,
+        attendees=attendees,
+        tags=tags,
+        private=private
+    )
+
+    db.session.add(event)
+    db.session.commit()
+
+    return event.to_dict()
+
 
 # View an event
 @event_routes.route('/<int:id>')
