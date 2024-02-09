@@ -151,7 +151,7 @@ def create_event():
 
 
 # View or update an event
-@event_routes.route('/<int:id>', methods=["GET", "PUT"])
+@event_routes.route('/<int:id>', methods=["GET", "PUT", "DELETE"])
 def get_event(id):
     if current_user.is_authenticated:
         user_id = current_user.id
@@ -184,12 +184,13 @@ def get_event(id):
         else:
             return event.to_dict()
 
+    # Returns an unauthorized message if the logged in user does not own the event
+    if not event.owner_id == user_id:
+        message = "You are not authorized to edit this resource"
+        return message, 401
+
     # Edit an event
     if request.method == "PUT":
-        # Returns an unauthorized message if the logged in user does not own the event
-        if not event.owner_id == user_id:
-            message = "You are not authorized to edit this resource"
-            return message, 401
 
         new_name = request.json.get("name", None)
         new_description = request.json.get("description", None)
@@ -226,10 +227,10 @@ def get_event(id):
         updated_event = Event.query.get(id)
         return updated_event.to_dict()
 
-# {
-#     "name": "just anotherr event",
-#     "description": "a typical event",
-#     "date_hosted": "2024-03-16 8:00:00.000000",
-#     "location": "some place",
-#     "private": false
-# }
+    # Delete an event
+    if request.method == "DELETE":
+        db.session.delete(event)
+        db.session.commit()
+
+        message = "Success: Event has been removed"
+        return message, 200
