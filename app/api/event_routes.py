@@ -150,8 +150,8 @@ def create_event():
     return event.to_dict()
 
 
-# View an event
-@event_routes.route('/<int:id>')
+# View or update an event
+@event_routes.route('/<int:id>', methods=["GET", "PUT"])
 def get_event(id):
     if current_user.is_authenticated:
         user_id = current_user.id
@@ -164,20 +164,72 @@ def get_event(id):
         error = { "error": "Event with the specified id does not exist" }
         return error, 404
 
-    # Determines whether user is authorized to view the event
-    authorized = False
+    # View an event
+    if request.method == "GET":
+        # Determines whether user is authorized to view the event
+        authorized = False
 
-    if event.private == False:
-        authorized = True
-    elif event.owner_id == user_id:
-        authorized = True
-    elif user_id in event.attendees:
-        authorized = True
+        if event.private == False:
+            authorized = True
+        elif event.owner_id == user_id:
+            authorized = True
+        elif user_id in event.attendees:
+            authorized = True
 
-    if authorized == False:
-        message = "You are not authorized to view this resource"
-        return message, 401
+        if authorized == False:
+            message = "You are not authorized to view this resource"
+            return message, 401
 
-    # Returns the event if it's found and the user is authorized to view it
-    else:
-        return event.to_dict()
+        # Returns the event if it's found and the user is authorized to view it
+        else:
+            return event.to_dict()
+
+    # Edit an event
+    if request.method == "PUT":
+        # Returns an unauthorized message if the logged in user does not own the event
+        if not event.owner_id == user_id:
+            message = "You are not authorized to edit this resource"
+            return message, 401
+
+        new_name = request.json.get("name", None)
+        new_description = request.json.get("description", None)
+        new_date_hosted = request.json.get("date_hosted", None)
+        new_location = request.json.get("location", None)
+        new_private = request.json.get("private", None)
+
+        # Backend validations
+        validation_errors = {}
+
+        if new_description is not None and (len(new_description) < 10 or len(new_description) > 255):
+            validation_errors["description"] = "Please provide a description between 10 and 255 characters"
+            return validation_errors, 500
+
+        # Updates any fields which were provided in the request body
+        if not new_name == None:
+            event.name = new_name
+        if not new_description == None:
+            event.description = new_description
+        if not new_date_hosted == None:
+            event.date_hosted = new_date_hosted
+        if not new_location == None:
+            event.location = new_location
+        if not new_private == None:
+            event.private == new_private
+
+        if new_name or new_description or new_date_hosted or new_location or new_private:
+            event.updated_at = datetime.utcnow()
+
+        # Adds any changes to the database
+        db.session.commit()
+
+        # Retrieves and returns the updated event
+        updated_event = Event.query.get(id)
+        return updated_event.to_dict()
+
+# {
+#     "name": "just anotherr event",
+#     "description": "a typical event",
+#     "date_hosted": "2024-03-16 8:00:00.000000",
+#     "location": "some place",
+#     "private": false
+# }
