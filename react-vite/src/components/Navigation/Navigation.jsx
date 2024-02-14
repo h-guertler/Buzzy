@@ -3,6 +3,7 @@ import ProfileButton from "./ProfileButton";
 import honeycomb from "../../../src/honeycomb.svg";
 import "./Navigation.css";
 
+
 function Navigation() {
 
   const navigate = useNavigate();
