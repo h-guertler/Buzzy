@@ -1,5 +1,20 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from sqlalchemy.ext.mutable import Mutable
+
+class MutableList(Mutable, list):
+    def append(self, value):
+        list.append(self, value)
+        self.changed()
+
+    @classmethod
+    def coerce(cls, key, value):
+        if not isinstance(value, MutableList):
+            if isinstance(value, list):
+                return MutableList(value)
+            return Mutable.coerce(key, value)
+        else:
+            return value
 
 
 class Event(db.Model):
@@ -14,8 +29,9 @@ class Event(db.Model):
     description = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     date_hosted = db.Column(db.DateTime, nullable=False)
-    attendees = db.Column(db.ARRAY(db.Integer))
-    tags = db.Column(db.ARRAY(db.String(20)))
+    # FLAG CHANGED
+    attendees = db.Column(MutableList.as_mutable(db.ARRAY(db.Integer)))
+    tags = db.Column(MutableList.as_mutable(db.ARRAY(db.String(20))))
     private = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
