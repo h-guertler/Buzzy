@@ -42,16 +42,12 @@ def get_user_event_images(id):
     return { "event images": images }
 
 
-@user_routes.route('/<int:id>/events')
-def get_user_events(id):
-    user = User.query.get(id)
-    # Returns a 404 error if there is no user with the specified ID
-    if not user:
-        error = 'User with the specified ID could not be found'
-        return error, 404
+@user_routes.route('/current/events')
+def get_user_events():
+    current_user_id = current_user.id
 
     query = db.session.query(Event) \
-        .filter(Event.owner_id == id) \
+        .filter(Event.owner_id == current_user_id) \
         .all()
 
     events = [event.to_dict() for event in query]
