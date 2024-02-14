@@ -29,7 +29,6 @@ class Event(db.Model):
     description = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     date_hosted = db.Column(db.DateTime, nullable=False)
-    # FLAG CHANGED
     attendees = db.Column(MutableList.as_mutable(db.ARRAY(db.Integer)))
     tags = db.Column(MutableList.as_mutable(db.ARRAY(db.String(20))))
     private = db.Column(db.Boolean, nullable=False)
