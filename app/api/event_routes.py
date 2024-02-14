@@ -149,9 +149,9 @@ def create_event():
 
     return event.to_dict()
 
-# Add an attendee
-@event_routes.route('/<int:id>/attendees', methods=["POST"])
-def add_attendee(id):
+# Add or remove an attendee
+@event_routes.route('/<int:id>/attendees', methods=["POST", "DELETE"])
+def add_or_remove_attendee(id):
     if current_user.is_authenticated:
         user_id = current_user.id
     else:
@@ -168,34 +168,50 @@ def add_attendee(id):
         message = "You are not authorized to edit this resource"
         return message, 401
 
-    # Extracts the username or email from the request
-    user_info = request.json.get("user_info")
+    # Add an attendee
+    if request.method == "POST":
+        # Extracts the username or email from the request
+        user_info = request.json.get("user_info")
 
-    # Uses the submitted information to find a user, whose ID is then added to the event's attendees
-    queried_user = db.session.query(User) \
-        .filter((User.email == user_info) | (User.username == user_info)) \
-        .first()
+        # Uses the submitted information to find a user, whose ID is then added to the event's attendees
+        queried_user = db.session.query(User) \
+            .filter((User.email == user_info) | (User.username == user_info)) \
+            .first()
 
-    if queried_user:
-        if queried_user.id in event.attendees:
-            message = "You have already invited this user to your event"
-            return message, 400
+        if queried_user:
+            if queried_user.id in event.attendees:
+                message = "You have already invited this user to your event"
+                return message, 400
+            else:
+                event.attendees.append(queried_user.id)
+                event.updated_at = datetime.utcnow()
+                db.session.add(event)
+                db.session.commit()
+                event = Event.query.get(id)
+                return event.to_dict()
+
         else:
-            event.name = "event name was changed"
-            event.attendees.append(queried_user.id)
-            print("attendees: ", event.attendees)
-            print("about to add event: ", event.to_dict())
+            message = "Unable to find a user with the specified email or username"
+            return message, 400
+
+    # Remove an attendee
+    if request.method == "DELETE":
+        deleted_id = request.json.get("deleted_id")
+
+        # Removes the user ID from the list of attendees if it's found in the list,
+        # then returns the updated event
+        if deleted_id in event.attendees:
+            event.attendees = [ele for ele in event.attendees if ele != deleted_id]
+            event.updated_at = datetime.utcnow()
             db.session.add(event)
-            print("attendees again: ", event.attendees)
             db.session.commit()
             event = Event.query.get(id)
-            print("added event: ", event.to_dict())
-            print("attendees final: ", event.attendees)
             return event.to_dict()
 
-    else:
-        message = "Unable to find a user with the specified email or username"
-        return message, 400
+        # Returns an error message if the user ID is not found in the event's list of attendees
+        else:
+            message = "Unable to find an event attendee with the specified username or email"
+            return message, 400
 
 
 # View or update an event
