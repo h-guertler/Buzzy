@@ -318,7 +318,7 @@ def add_or_remove_tag(id):
         message = "You are not authorized to edit this resource"
         return message, 401
 
-    # Adds an event tag
+    # Add an event tag
     if request.method == "POST":
         tag = request.json.get("tag", None)
         if (tag == None) or (len(tag) < 2) or (len(tag) > 20):
@@ -335,3 +335,21 @@ def add_or_remove_tag(id):
         else:
             message = "You have already added this event tag"
             return message, 400
+
+    # Delete an event tag
+    if request.method == "DELETE":
+        tag = request.json.get("tag", None)
+        if tag == None:
+            message = "Please select a tag to remove"
+            return message, 500
+
+        if tag and tag not in event.tags:
+            message = "The event does not contain this tag"
+            return message, 400
+        else:
+            event.tags = [ele for ele in event.tags if ele != tag]
+            event.updated_at = datetime.utcnow()
+            db.session.add(event)
+            db.session.commit()
+            event = Event.query.get(id)
+            return event.to_dict()
