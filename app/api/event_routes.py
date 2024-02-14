@@ -298,3 +298,40 @@ def get_event(id):
 
         message = "Success: Event has been removed"
         return message, 200
+
+# Add or remove an event tag
+@event_routes.route('/<int:id>/tags', methods=["POST", "DELETE"])
+def add_or_remove_tag(id):
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = None
+
+    # Exits with status 404 if no event with the ID in the URL exists
+    event = Event.query.get(id)
+    if not event:
+        error = { "error": "Event with the specified id does not exist" }
+        return error, 404
+
+    # Returns an unauthorized message if the logged in user does not own the event
+    if not event.owner_id == user_id:
+        message = "You are not authorized to edit this resource"
+        return message, 401
+
+    # Adds an event tag
+    if request.method == "POST":
+        tag = request.json.get("tag", None)
+        if (tag == None) or (len(tag) < 2) or (len(tag) > 20):
+            message = "Please add a tag between 2 and 20 characters"
+            return message, 500
+
+        if tag not in event.tags:
+            event.tags.append(tag)
+            event.updated_at = datetime.utcnow()
+            db.session.add(event)
+            db.session.commit()
+            event = Event.query.get(id)
+            return event.to_dict()
+        else:
+            message = "You have already added this event tag"
+            return message, 400
