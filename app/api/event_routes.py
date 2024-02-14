@@ -81,7 +81,6 @@ def get_event_images(id):
     if event and event.private == True:
         if event.owner_id == current_user_id:
             authorized = True
-        # FLAG
         if current_user_id in attendees:
             authorized = True
 
@@ -112,7 +111,6 @@ def create_event():
     description = request.json.get('description', None)
     date_hosted = request.json.get('date_hosted', None)
     location = request.json.get('location', None)
-    # FLAG
     attendees = request.json.get('attendees', [])
     tags = request.json.get('tags', [])
     private = request.json.get('private', None)
@@ -179,13 +177,11 @@ def add_attendee(id):
         .first()
 
     if queried_user:
-        # FLAG
         if queried_user.id in event.attendees:
             message = "You have already invited this user to your event"
             return message, 400
         else:
             event.name = "event name was changed"
-            #FLAG
             event.attendees.append(queried_user.id)
             print("attendees: ", event.attendees)
             print("about to add event: ", event.to_dict())
@@ -225,7 +221,6 @@ def get_event(id):
             authorized = True
         elif event.owner_id == user_id:
             authorized = True
-            # FLAG
         elif user_id in event.attendees:
             authorized = True
 

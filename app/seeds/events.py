@@ -8,7 +8,6 @@ def seed_events():
         description="buy and sell crafty wares!",
         location="123 main st, anywhere, usa",
         date_hosted="2024-10-10 8:00:00.000000",
-        # FLAG CHANGE
         attendees=[],
         tags=[],
         private=False)
@@ -18,7 +17,6 @@ def seed_events():
         description="the loudest night of your life!",
         location="321 main st, anywhere, usa",
         date_hosted="2024-05-01 22:00:00.000000",
-        # FLAG
         attendees=[],
         tags=[],
         private=False)
@@ -28,7 +26,6 @@ def seed_events():
         description="it's all in the name",
         location="123 residential st, anywhere, usa",
         date_hosted="2025-12-31 21:00:00.000000",
-        # FLAG
         attendees=[2],
         tags=[],
         private=True)
