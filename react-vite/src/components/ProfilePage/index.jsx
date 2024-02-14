@@ -1,8 +1,12 @@
-// import React from "react";
-// import { useParams } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 
-// function ProfilePage() {
-//     const { userId } = useParams();
+function ProfilePage() {
+    const { userId } = useParams();
 
-//     return (<h1>hello from profilepage of {userId}!</h1>)
-// }
+    return (
+        <h1>hello from profilepage of {userId}!</h1>
+    )
+}
+
+export default ProfilePage;

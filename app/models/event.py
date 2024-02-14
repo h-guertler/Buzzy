@@ -31,6 +31,7 @@ class Event(db.Model):
     date_hosted = db.Column(db.DateTime, nullable=False)
     attendees = db.Column(MutableList.as_mutable(db.ARRAY(db.Integer)))
     tags = db.Column(MutableList.as_mutable(db.ARRAY(db.String(20))))
+    preview_image = db.Column(db.String(255))
     private = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

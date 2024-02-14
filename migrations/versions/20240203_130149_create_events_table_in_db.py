@@ -28,6 +28,7 @@ def upgrade():
     sa.Column('attendees', sa.ARRAY(sa.Integer()), nullable=True),
     sa.Column('tags', sa.ARRAY(sa.String(length=20)), nullable=True),
     sa.Column('private', sa.Boolean(), nullable=False),
+    sa.Column('preview_image', sa.String(length=255)),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),

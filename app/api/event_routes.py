@@ -353,3 +353,14 @@ def add_or_remove_tag(id):
             db.session.commit()
             event = Event.query.get(id)
             return event.to_dict()
+
+
+# Get all events
+@event_routes.route('/all', methods=["GET"])
+def get_events():
+    query = db.session.query(Event) \
+        .all()
+
+    events = [event.to_dict() for event in query]
+
+    return { "events": events }
