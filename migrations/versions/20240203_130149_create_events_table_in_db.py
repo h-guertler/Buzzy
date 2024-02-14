@@ -25,6 +25,7 @@ def upgrade():
     sa.Column('description', sa.String(length=255), nullable=False),
     sa.Column('location', sa.String(length=255), nullable=False),
     sa.Column('date_hosted', sa.DateTime(), nullable=False),
+    # FLAG CHANGE
     sa.Column('attendees', sa.ARRAY(sa.Integer()), nullable=True),
     sa.Column('tags', sa.ARRAY(sa.String(length=20)), nullable=True),
     sa.Column('private', sa.Boolean(), nullable=False),

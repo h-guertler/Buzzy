@@ -81,6 +81,7 @@ def get_event_images(id):
     if event and event.private == True:
         if event.owner_id == current_user_id:
             authorized = True
+        # FLAG
         if current_user_id in attendees:
             authorized = True
 
@@ -111,6 +112,7 @@ def create_event():
     description = request.json.get('description', None)
     date_hosted = request.json.get('date_hosted', None)
     location = request.json.get('location', None)
+    # FLAG
     attendees = request.json.get('attendees', [])
     tags = request.json.get('tags', [])
     private = request.json.get('private', None)
@@ -149,6 +151,56 @@ def create_event():
 
     return event.to_dict()
 
+# Add an attendee
+@event_routes.route('/<int:id>/attendees', methods=["POST"])
+def add_attendee(id):
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = None
+
+    # Exits with status 404 if no event with the ID in the URL exists
+    event = Event.query.get(id)
+    if not event:
+        error = { "error": "Event with the specified id does not exist" }
+        return error, 404
+
+    # Returns an unauthorized message if the logged in user does not own the event
+    if not event.owner_id == user_id:
+        message = "You are not authorized to edit this resource"
+        return message, 401
+
+    # Extracts the username or email from the request
+    user_info = request.json.get("user_info")
+
+    # Uses the submitted information to find a user, whose ID is then added to the event's attendees
+    queried_user = db.session.query(User) \
+        .filter((User.email == user_info) | (User.username == user_info)) \
+        .first()
+
+    if queried_user:
+        # FLAG
+        if queried_user.id in event.attendees:
+            message = "You have already invited this user to your event"
+            return message, 400
+        else:
+            event.name = "event name was changed"
+            #FLAG
+            event.attendees.append(queried_user.id)
+            print("attendees: ", event.attendees)
+            print("about to add event: ", event.to_dict())
+            db.session.add(event)
+            print("attendees again: ", event.attendees)
+            db.session.commit()
+            event = Event.query.get(id)
+            print("added event: ", event.to_dict())
+            print("attendees final: ", event.attendees)
+            return event.to_dict()
+
+    else:
+        message = "Unable to find a user with the specified email or username"
+        return message, 400
+
 
 # View or update an event
 @event_routes.route('/<int:id>', methods=["GET", "PUT", "DELETE"])
@@ -173,6 +225,7 @@ def get_event(id):
             authorized = True
         elif event.owner_id == user_id:
             authorized = True
+            # FLAG
         elif user_id in event.attendees:
             authorized = True
 
