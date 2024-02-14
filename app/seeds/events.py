@@ -30,7 +30,7 @@ def seed_events():
         date_hosted="2025-12-31 21:00:00.000000",
         attendees=[2],
         tags=[],
-        private=True)
+        private=False)
 
     db.session.add(craft_show)
     db.session.add(metal_show)
