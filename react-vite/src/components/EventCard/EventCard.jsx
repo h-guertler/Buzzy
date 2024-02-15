@@ -1,15 +1,20 @@
-import React, { useRef } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
-import DeleteEventModal from "../DeleteEventModal";
+import { useModal } from "../../context/Modal";
 import UpdateEventModal from "../UpdateEventModal";
+import ConfirmDeleteEvent from "../ConfirmDeleteEvent";
+import { fetchDeleteEvent, fetchGetAllEvents } from "../../redux/events";
 import "./EventCard.css";
 
 function EventCard(props) {
     const { event } = props;
     const user = useSelector(state => state.session.user);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
 
     let userId;
     if (user && user.id) userId = user.id;
@@ -26,6 +31,12 @@ function EventCard(props) {
         e.stopPropagation();
     }
 
+    const deleteEvent = async () => {
+        await dispatch(fetchDeleteEvent(event.id));
+        await dispatch(fetchGetAllEvents());
+        closeModal();
+    }
+
     return (
         <div key={event.name} onClick={navigateToEventDetail} className="clickable">
             <h3>
@@ -38,12 +49,14 @@ function EventCard(props) {
                 <OpenModalButton
                     buttonText="Update"
                     onButtonClick={handleButtonClick}
+                    className="clickable"
                     modalComponent={<UpdateEventModal />}
                 />
                 <OpenModalButton
                     buttonText="Delete"
                     onButtonClick={handleButtonClick}
-                    modalComponent={<DeleteEventModal />}
+                    className="clickable"
+                    modalComponent={<ConfirmDeleteEvent eventId={event.id} deleteEvent={deleteEvent}/>}
                 />
             </div>
         </div>

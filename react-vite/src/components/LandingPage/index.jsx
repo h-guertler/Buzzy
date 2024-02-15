@@ -14,7 +14,7 @@ function LandingPage() {
   }, [dispatch]);
 
   const events = useSelector(state => state.events.events)
-  const eventArray = events ? events.events : [];
+  const eventArray = events && events.events ? events.events : [];
 
   const renderedEvents = eventArray.map((event) => (
     <EventCard event={event} key={event.id}/>
