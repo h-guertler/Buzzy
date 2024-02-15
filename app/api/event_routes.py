@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app.models import db, User, Event, Event_Image
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -297,7 +297,7 @@ def get_event(id):
         db.session.commit()
 
         message = "Success: Event has been removed"
-        return message, 200
+        return jsonify(message), 200
 
 # Add or remove an event tag
 @event_routes.route('/<int:id>/tags', methods=["POST", "DELETE"])
