@@ -194,7 +194,7 @@ def add_or_remove_attendee(id):
         if queried_user:
             if queried_user.id in event.attendees:
                 message = "You have already invited this user to your event"
-                return message, 400
+                return jsonify(message), 400
             else:
                 event.attendees.append(queried_user.id)
                 event.updated_at = datetime.utcnow()
@@ -205,7 +205,7 @@ def add_or_remove_attendee(id):
 
         else:
             message = "Unable to find a user with the specified email or username"
-            return message, 400
+            return jsonify(message), 400
 
     # Remove an attendee
     if request.method == "DELETE":

@@ -2,7 +2,8 @@ const GET_EVENT = 'events/getEvent';
 const GET_ALL_EVENTS = 'events/getAllEvents';
 const DELETE_EVENT = 'events/deleteEvent';
 const GET_EVENT_IMAGES = 'events/getEventImages';
-const GET_USERNAMES = 'events/getUsernames'
+const GET_USERNAMES = 'events/getUsernames';
+const ADD_ATTENDEE = 'events/addAttendee';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -29,6 +30,11 @@ const getUsernames = (usernames) => ({
     payload: usernames
 });
 
+const addAttendee = (attendeeId, reqBody) => ({
+    type: ADD_ATTENDEE,
+    payload: { attendeeId, reqBody }
+})
+
 export const fetchGetEvent = (eventId) => async (dispatch) => {
 	const response = await fetch(`/api/events/${eventId}`);
 	if (response.ok) {
@@ -47,6 +53,7 @@ export const fetchGetAllEvents = () => async (dispatch) => {
         dispatch(getAllEvents(data));
     } else {
         const data = await response.json();
+        return data;
     }
 };
 
@@ -79,6 +86,27 @@ export const fetchGetUsernames = (eventId) => async (dispatch) => {
     }
 }
 
+export const fetchAddAttendee = (eventId, attendeeInfo) => async (dispatch) => {
+    const reqBody = { user_info: attendeeInfo }
+    const response = await fetch(`/api/events/${eventId}/attendees`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        const newAttendeeId = data.attendees.pop();
+        await dispatch(addAttendee(newAttendeeId, reqBody));
+        return;
+    } else {
+        const data = await response.json();
+        return data;
+    }
+}
+
 const initialState = { events: [] };
 
 function eventsReducer(state = initialState, action) {
@@ -93,6 +121,13 @@ function eventsReducer(state = initialState, action) {
             return { ...state, eventImages: action.payload };
         case GET_USERNAMES:
             return { ...state, usernames: action.payload };
+        case ADD_ATTENDEE:
+            const updatedEvent = {
+                ...state.event,
+                attendees: [...state.event.attendees, action.payload.attendeeId],
+            }
+            const updatedUsernames = [...state.usernames, action.payload.reqBody.user_info]
+            return { ...state, event: updatedEvent, usernames: updatedUsernames };
         default:
             return state;
     }
