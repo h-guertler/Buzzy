@@ -23,5 +23,6 @@ class Event_Image(db.Model):
             'id': self.id,
             'url': self.url,
             'user_id': self.user_id,
-            'event_id': self.event_id
+            'event_id': self.event_id,
+            'created_at': self.created_at
         }
