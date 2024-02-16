@@ -65,7 +65,9 @@ def create_event_image(id):
 # View an event's images
 @event_routes.route('/<int:id>/images', methods=["GET"])
 def get_event_images(id):
-    current_user_id = current_user.id
+    if current_user.is_authenticated:
+        current_user_id = current_user.id
+
     event_id = id
 
     # Exits with status 404 if no event with the ID in the URL exists
@@ -89,14 +91,25 @@ def get_event_images(id):
 
     if authorized == True:
         # Queries the database for all event_images with an event_id of event_id
-        query = db.session.query(Event_Image) \
-        .filter(Event_Image.event_id == event_id) \
-        .all()
+        query = db.session.query(Event_Image, User.username) \
+            .join(User, Event_Image.user_id == User.id) \
+            .filter(Event_Image.event_id == event_id) \
+            .all()
+
+        images_with_usernames = []
 
         # Formats the data from the query above
-        images = [image.to_dict() for image in query]
+        for image, username in query:
+            images_with_usernames.append({
+                "id": image.id,
+                "url": image.url,
+                "event_id": image.event_id,
+                "user_id": image.user_id,
+                "username": username,
+                "created_at": image.created_at
+            })
 
-        return { "event images": images }
+        return { "event images": images_with_usernames }
 
     else:
         msg = { "error": "You are unauthorized to view this resource" }
@@ -364,3 +377,28 @@ def get_events():
     events = [event.to_dict() for event in query]
 
     return { "events": events }
+
+
+# Get usernames of all event attendees
+@event_routes.route('/<int:id>/attendees', methods=["GET"])
+def get_attendee_usernames(id):
+    if current_user.is_authenticated:
+        user_id = current_user.id
+    else:
+        user_id = None
+
+    # Exits with status 404 if no event with the ID in the URL exists
+    event = Event.query.get(id)
+    if not event:
+        error = { "error": "Event with the specified id does not exist" }
+        return error, 404
+
+    # Returns an unauthorized message if the logged in user does not own the event and is not in the list of attendees
+    if (not event.owner_id == user_id) and (not user_id in event.attendees):
+        message = "You are not authorized to access this resource"
+        return message, 401
+
+    user_ids = event.attendees
+    users = User.query.filter(User.id.in_(user_ids)).all()
+    usernames = [user.username for user in users]
+    return usernames

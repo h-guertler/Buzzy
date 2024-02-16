@@ -18,7 +18,7 @@ function LandingPage() {
 
   const renderedEvents = eventArray.map((event) => (
     <EventCard event={event} key={event.id}/>
-  ))
+  ));
 
     return (
         <div>
