@@ -1,6 +1,7 @@
 const GET_EVENT = 'events/getEvent';
 const GET_ALL_EVENTS = 'events/getAllEvents';
 const DELETE_EVENT = 'events/deleteEvent';
+const GET_EVENT_IMAGES = 'events/getEventImages';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -17,28 +18,30 @@ const deleteEvent = (id) => ({
     id: id,
 });
 
-  export const fetchGetEvent = (eventId) => async (dispatch) => {
+const getEventImages = (eventImages) => ({
+    type: GET_EVENT_IMAGES,
+    payload: eventImages
+});
+
+export const fetchGetEvent = (eventId) => async (dispatch) => {
 	const response = await fetch(`/api/events/${eventId}`);
 	if (response.ok) {
 		const data = await response.json();
+        dispatch(getEvent(data));
 		if (data.errors) {
 			return;
 		}
-
-		dispatch(getEvent(data));
 	}
 };
 
 export const fetchGetAllEvents = () => async (dispatch) => {
-	const response = await fetch(`/api/events/all`);
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
-
-		dispatch(getAllEvents(data));
-	}
+    const response = await fetch(`/api/events/all`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getAllEvents(data));
+    } else {
+        const data = await response.json();
+    }
 };
 
 export const fetchDeleteEvent = (eventId) => async (dispatch) => {
@@ -47,6 +50,17 @@ export const fetchDeleteEvent = (eventId) => async (dispatch) => {
 		dispatch(deleteEvent(eventId));
 	}
 };
+
+export const fetchGetEventImages = (eventId) => async (dispatch) => {
+    const response = await fetch(`/api/events/${eventId}/images`);
+    if (response.ok) {
+		const data = await response.json();
+        dispatch(getEvent(data));
+		if (data.errors) {
+			return;
+		}
+	}
+}
 
 const initialState = { events: [] };
 
@@ -57,7 +71,9 @@ function eventsReducer(state = initialState, action) {
         case GET_ALL_EVENTS:
             return { ...state, events: action.payload };
         case DELETE_EVENT:
-            return { ...state, events: state.events.events.filter(event => event.id != action.id)}
+            return { ...state, events: state.events.events.filter(event => event.id != action.id)};
+        case GET_EVENT_IMAGES:
+            return { ...state, eventImages: action.payload };
         default:
             return state;
     }

@@ -29,7 +29,7 @@ def seed_events():
         location="123 residential st, anywhere, usa",
         date_hosted="2025-12-31 21:00:00.000000",
         attendees=[2],
-        tags=[],
+        tags=["board games", "casual", "potluck", "collab playlist"],
         private=False)
 
     db.session.add(craft_show)
