@@ -8,7 +8,7 @@ function EventImages (images) {
 
     const imgArray = images["images"];
 
-    const renderedImages = imgArray.map((image) =>(
+    const renderedImages = imgArray.reverse().map((image) =>(
         <div key={image.id}>
             <img className="image" src={image.url ? image.url : loadingplaceholderimg} alt="event image"/>
             <div>{image.created_at ? sliceDate(image.created_at.toString()) : ""}</div>
