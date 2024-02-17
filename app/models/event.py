@@ -49,6 +49,7 @@ class Event(db.Model):
             'description': self.description,
             'location': self.location,
             'date_hosted': self.date_hosted,
+            'preview_image': self.preview_image,
             'attendees': self.attendees,
             'tags': self.tags,
             'private': self.private
