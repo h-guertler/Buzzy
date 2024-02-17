@@ -124,6 +124,7 @@ def create_event():
     description = request.json.get('description', None)
     date_hosted = request.json.get('date_hosted', None)
     location = request.json.get('location', None)
+    preview_image = request.json.get('preview_image', None)
     attendees = request.json.get('attendees', [])
     tags = request.json.get('tags', [])
     private = request.json.get('private', None)
@@ -152,6 +153,7 @@ def create_event():
         description=description,
         location=location,
         date_hosted=date_hosted,
+        preview_image=preview_image,
         attendees=attendees,
         tags=tags,
         private=private
