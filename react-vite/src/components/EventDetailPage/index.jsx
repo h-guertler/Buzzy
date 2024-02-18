@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AddTagModal from "../AddTagModal";
 import AddAttendeeModal from "../AddAttendeeModal";
+import AddEventImageModal from "../AddEventImageModal";
 import OpenModalButton from "../OpenModalButton";
 
 import "./EventDetailPage.css";
@@ -87,7 +88,15 @@ function EventDetailPage() {
                     buttonText="Add a Guest"
                     onButtonClick={handleButtonClick}
                     className="clickable"
-                    modalComponent={<AddAttendeeModal/>}
+                    modalComponent={<AddAttendeeModal />}
+                />
+            </div>
+            <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id) || user.id === event.owner_id))}>
+                <OpenModalButton
+                    buttonText="Add a Photo"
+                    onButtonClick={handleButtonClick}
+                    className="clickable"
+                    modalComponent={<AddEventImageModal />}
                 />
             </div>
             <div>

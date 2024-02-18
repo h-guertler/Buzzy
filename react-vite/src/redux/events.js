@@ -6,6 +6,7 @@ const GET_USERNAMES = 'events/getUsernames';
 const ADD_ATTENDEE = 'events/addAttendee';
 const CREATE_EVENT = 'events/createEvent';
 const ADD_TAG = 'events/addTag';
+const ADD_IMAGE = 'events/addImage';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -45,6 +46,11 @@ const createEvent = (event) => ({
 const addTag = (tag) => ({
     type: ADD_TAG,
     payload: tag
+});
+
+const addImage = (imageObj) => ({
+    type: ADD_IMAGE,
+    payload: imageObj
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -158,8 +164,6 @@ export const fetchAddTag = (tag, eventId) => async (dispatch) => {
         body: JSON.stringify(reqBody)
     });
 
-    console.log("response from backend: ", response);
-
     if (response.ok) {
         const data = await response.json();
         const newTag = data.tags.pop();
@@ -171,7 +175,29 @@ export const fetchAddTag = (tag, eventId) => async (dispatch) => {
     }
 }
 
-const initialState = { events: [] };
+export const fetchAddImage = (imageUrl, eventId) => async (dispatch) => {
+    const reqBody = { url: imageUrl }
+    const response = await fetch(`/api/events/${eventId}/images`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    console.log("response from backend: ", response);
+
+    if (response.ok) {
+        const data = await response.json();
+        await dispatch(addImage(data));
+        return data;
+    } else {
+        const data = await response.json();
+        return data;
+    }
+}
+
+const initialState = { events: [], eventImages: [] };
 
 function eventsReducer(state = initialState, action) {
     switch (action.type) {
@@ -208,6 +234,12 @@ function eventsReducer(state = initialState, action) {
             return {
                 ...state,
                 event: updatedEventWithTags
+            }
+        case ADD_IMAGE:
+            const updatedEventImgs = [...state.eventImages["event images"], action.payload]
+            return {
+                ...state,
+                eventImages: updatedEventImgs
             }
         default:
             return state;

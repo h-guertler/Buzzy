@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { fetchAddTag, fetchGetEvent } from "../../redux/events";
+import { fetchAddImage, fetchGetEvent, fetchGetEventImages } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import "./index.css";
 
-function AddTagModal() {
+function AddEventImageModal() {
 
     const dispatch = useDispatch();
     const { eventId } = useParams();
     const { closeModal } = useModal();
 
-    const [tagInfo, setTagInfo] = useState("");
+    const [imageInfo, setImageInfo] = useState("");
     const [errors, setErrors] = useState([]);
 
     const handleSubmit = async (e) => {
@@ -21,11 +22,12 @@ function AddTagModal() {
         let res;
 
         try {
-            res = await dispatch(fetchAddTag(tagInfo, eventId));
-            if (res && !res.location) {
+            res = await dispatch(fetchAddImage(imageInfo, eventId));
+            if (res && !res.url) {
                 setErrors(res);
             } else {
                 await dispatch(fetchGetEvent(eventId));
+                await dispatch(fetchGetEventImages(eventId))
                 closeModal();
             }
         } catch (error) {
@@ -37,16 +39,20 @@ function AddTagModal() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <h2>Add a Tag</h2>
+                <h2>Add a Photo</h2>
                 <div>{errors}</div>
+                <p>Please enter the image's URL</p>
+                <img id="image" alt="event image" src={imageInfo} className="image-preview"/>
                 <input
-                    type="text"
-                    value={tagInfo}
-                    onChange={(e) => setTagInfo(e.target.value)}
+                    type="url"
+                    id="image-input"
+                    value={imageInfo}
+                    onChange={(e) => setImageInfo(e.target.value)}
+                    placeholder="Use a URL ending with .jpg or .jpeg"
                 />
                 <button
                     type="submit"
-                    disabled={tagInfo.length < 2}>
+                    disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}>
                     Add
                 </button>
             </form>
@@ -54,4 +60,4 @@ function AddTagModal() {
     )
 }
 
-export default AddTagModal;
+export default AddEventImageModal;

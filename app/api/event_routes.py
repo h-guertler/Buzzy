@@ -42,7 +42,7 @@ def create_event_image(id):
         validation_errors["url"] = "Image URL must end in .jpg or .jpeg"
 
     if validation_errors:
-        return validation_errors, 500
+        return jsonify(validation_errors), 500
 
     # Creates a new event image and adds it to the database
     new_image = Event_Image(
