@@ -7,6 +7,7 @@ const ADD_ATTENDEE = 'events/addAttendee';
 const CREATE_EVENT = 'events/createEvent';
 const ADD_TAG = 'events/addTag';
 const ADD_IMAGE = 'events/addImage';
+const DELETE_IMAGE = 'events/deleteImage';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -51,6 +52,11 @@ const addTag = (tag) => ({
 const addImage = (imageObj) => ({
     type: ADD_IMAGE,
     payload: imageObj
+});
+
+const deleteImage = (imageId) => ({
+    type: DELETE_IMAGE,
+    payload: imageId
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -185,8 +191,6 @@ export const fetchAddImage = (imageUrl, eventId) => async (dispatch) => {
         body: JSON.stringify(reqBody)
     });
 
-    console.log("response from backend: ", response);
-
     if (response.ok) {
         const data = await response.json();
         await dispatch(addImage(data));
@@ -196,6 +200,13 @@ export const fetchAddImage = (imageUrl, eventId) => async (dispatch) => {
         return data;
     }
 }
+
+export const fetchDeleteImage = (imageId) => async (dispatch) => {
+	const response = await fetch(`/api/images/${imageId}`, { method: "DELETE" });
+	if (response.ok) {
+		await dispatch(deleteImage(imageId));
+	}
+};
 
 const initialState = { events: [], eventImages: [] };
 
@@ -230,17 +241,20 @@ function eventsReducer(state = initialState, action) {
             const updatedEventWithTags = {
                 ...state.event,
                 tags: [...state.event.tags, action.payload]
-            }
+            };
             return {
                 ...state,
                 event: updatedEventWithTags
-            }
+            };
         case ADD_IMAGE:
             const updatedEventImgs = [...state.eventImages["event images"], action.payload]
-            return {
-                ...state,
-                eventImages: updatedEventImgs
-            }
+            return { ...state, eventImages: updatedEventImgs }
+        case DELETE_IMAGE:
+            const updatedEventImgsDeleted = {
+                ...state.eventImages,
+                "event images": state.eventImages["event images"]?.filter(image => image.id !== action.payload)
+            };
+            return { ...state, eventImages: updatedEventImgsDeleted };
         default:
             return state;
     }

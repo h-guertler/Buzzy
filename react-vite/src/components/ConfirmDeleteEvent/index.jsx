@@ -11,7 +11,7 @@ const ConfirmDeleteEvent = ({ eventId, deleteEvent }) => {
 
             <div className="delete-event-buttons-container">
                 <button className="delete-event-buttons-delete clickable" onClick={() => deleteEvent(eventId)}>Yes (Delete Event)</button>
-                <button className="delete-album-buttons clickable" onClick={closeModal}>No (Keep Event)</button>
+                <button className="delete-event-buttons clickable" onClick={closeModal}>No (Keep Event)</button>
             </div>
         </div>
     )
