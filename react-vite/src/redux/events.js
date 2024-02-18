@@ -5,6 +5,7 @@ const GET_EVENT_IMAGES = 'events/getEventImages';
 const GET_USERNAMES = 'events/getUsernames';
 const ADD_ATTENDEE = 'events/addAttendee';
 const CREATE_EVENT = 'events/createEvent';
+const ADD_TAG = 'events/addTag';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -39,6 +40,11 @@ const addAttendee = (attendeeId, reqBody) => ({
 const createEvent = (event) => ({
     type: CREATE_EVENT,
     payload: event
+});
+
+const addTag = (tag) => ({
+    type: ADD_TAG,
+    payload: tag
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -81,6 +87,7 @@ export const fetchGetEventImages = (eventId) => async (dispatch) => {
 	}
 }
 
+
 export const fetchGetUsernames = (eventId) => async (dispatch) => {
     const response = await fetch(`/api/events/${eventId}/attendees`);
     if (response.ok) {
@@ -101,8 +108,6 @@ export const fetchAddAttendee = (eventId, attendeeInfo) => async (dispatch) => {
         },
         body: JSON.stringify(reqBody)
     });
-
-    console.log("response from backend: " + response)
 
     if (response.ok) {
         const data = await response.json();
@@ -143,6 +148,29 @@ export const fetchCreateEvent = (event) => async (dispatch) => {
     }
 }
 
+export const fetchAddTag = (tag, eventId) => async (dispatch) => {
+    const reqBody = { tag: tag }
+    const response = await fetch(`/api/events/${eventId}/tags`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    console.log("response from backend: ", response);
+
+    if (response.ok) {
+        const data = await response.json();
+        const newTag = data.tags.pop();
+        await dispatch(addTag(newTag));
+        return data;
+    } else {
+        const data = await response.json();
+        return data;
+    }
+}
+
 const initialState = { events: [] };
 
 function eventsReducer(state = initialState, action) {
@@ -171,6 +199,15 @@ function eventsReducer(state = initialState, action) {
                 ...state,
                 events: updatedEvents,
                 event: updatedEventAdded
+            }
+        case ADD_TAG:
+            const updatedEventWithTags = {
+                ...state.event,
+                tags: [...state.event.tags, action.payload]
+            }
+            return {
+                ...state,
+                event: updatedEventWithTags
             }
         default:
             return state;

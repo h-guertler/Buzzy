@@ -21,7 +21,7 @@ function AddAttendeeModal() {
         let res;
 
         try {
-            const res = await dispatch(fetchAddAttendee(eventId, attendeeInfo));
+            res = await dispatch(fetchAddAttendee(eventId, attendeeInfo));
             if (res && !res.ok) {
                 setErrors(res);
             } else {
