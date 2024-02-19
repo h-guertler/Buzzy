@@ -8,6 +8,7 @@ const CREATE_EVENT = 'events/createEvent';
 const ADD_TAG = 'events/addTag';
 const ADD_IMAGE = 'events/addImage';
 const DELETE_IMAGE = 'events/deleteImage';
+const DELETE_TAG = 'events/deleteTag';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -57,6 +58,11 @@ const addImage = (imageObj) => ({
 const deleteImage = (imageId) => ({
     type: DELETE_IMAGE,
     payload: imageId
+});
+
+const deleteTag = (tag, eventId) => ({
+    type: DELETE_TAG,
+    payload: { tag, eventId }
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -205,8 +211,37 @@ export const fetchDeleteImage = (imageId) => async (dispatch) => {
 	const response = await fetch(`/api/images/${imageId}`, { method: "DELETE" });
 	if (response.ok) {
 		await dispatch(deleteImage(imageId));
-	}
+	} else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "Image deletion unsuccessful" }
+        }
+    }
 };
+
+export const fetchDeleteTag = (tag, eventId) => async (dispatch) => {
+    const reqBody = { tag: tag };
+    const response = await fetch(`/api/events/${eventId}/tags`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    if (response.ok) {
+        await dispatch(deleteTag(tag, eventId));
+    } else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "Tag deletion unsuccessful" }
+        }
+    }
+}
 
 const initialState = { events: [], eventImages: [] };
 
@@ -255,6 +290,15 @@ function eventsReducer(state = initialState, action) {
                 "event images": state.eventImages["event images"]?.filter(image => image.id !== action.payload)
             };
             return { ...state, eventImages: updatedEventImgsDeleted };
+        case DELETE_TAG:
+            const updatedEventTagDeleted = {
+                ...state.event,
+                tags: state.event.tags?.filter(tag => tag !== action.payload.tag)
+            }
+            return {
+                ...state,
+                event: updatedEventTagDeleted
+            }
         default:
             return state;
     }
