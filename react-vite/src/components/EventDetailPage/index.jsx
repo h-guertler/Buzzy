@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddTagModal from "../AddTagModal";
 import AddAttendeeModal from "../AddAttendeeModal";
 import AddEventImageModal from "../AddEventImageModal";
+import ConfirmDeleteTag from "../ConfirmDeleteTag";
 import OpenModalButton from "../OpenModalButton";
 
 import "./EventDetailPage.css";
@@ -15,6 +16,10 @@ function EventDetailPage() {
     const dispatch = useDispatch();
 
     let [isLoading, setIsLoading] = useState(true)
+
+    const handleButtonClick = (e) => {
+        e.stopPropagation();
+    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -51,13 +56,21 @@ function EventDetailPage() {
     let tagString = "";
     if (tags) tagString = tags.join(" • ");
 
+    const deletableTags = event && event.tags ? event.tags.map((tag) => (
+        <div id={tag}>
+            {tag}
+            <OpenModalButton
+                buttonText="X"
+                onButtonClick={handleButtonClick}
+                className="clickable"
+                modalComponent={<ConfirmDeleteTag eventId={eventId} tag={tag}/>}
+            />
+        </div>
+    )) : <div></div>
+
     const imgArray = eventImages && eventImages["event images"] ? eventImages["event images"] : [];
 
     const sliceDate = (str) => str.slice(0, 16);
-
-    const handleButtonClick = (e) => {
-        e.stopPropagation();
-    }
 
     return (
 
@@ -71,7 +84,10 @@ function EventDetailPage() {
             <div>{event && event.date_hosted ? sliceDate(event.date_hosted.toString()) : ""}</div>
             <div>{event && event.location ? event.location : ""}</div>
             <p>{event && event.description ? event.description : ""}</p>
-            <p>{tagString}</p>
+            <p hidden={event && user && user.id === event.owner_id}>{tagString}</p>
+            <div className="deletable-tags" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
+            <p>{deletableTags}</p>
+            </div>
             <div hidden={!(event && user && user.id === event.owner_id)}>
                 <OpenModalButton
                     buttonText="Add A Tag"
