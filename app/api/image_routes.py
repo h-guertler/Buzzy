@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app.models import User, Event, Event_Image, db
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -50,4 +50,4 @@ def handle_event_image(id):
         db.session.delete(image)
         db.session.commit()
         success_msg = { "Success": "Image has been removed" }
-        return success_msg, 200
+        return jsonify(success_msg), 200

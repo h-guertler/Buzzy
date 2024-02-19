@@ -9,6 +9,7 @@ const ADD_TAG = 'events/addTag';
 const ADD_IMAGE = 'events/addImage';
 const DELETE_IMAGE = 'events/deleteImage';
 const DELETE_TAG = 'events/deleteTag';
+const EDIT_IMAGE = 'events/editImage';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -63,6 +64,11 @@ const deleteImage = (imageId) => ({
 const deleteTag = (tag, eventId) => ({
     type: DELETE_TAG,
     payload: { tag, eventId }
+});
+
+const editImage = (imageId, imageUrl) => ({
+    type: EDIT_IMAGE,
+    payload: { imageId, imageUrl }
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -243,6 +249,28 @@ export const fetchDeleteTag = (tag, eventId) => async (dispatch) => {
     }
 }
 
+export const fetchEditImage = (imageId, url) => async (dispatch) => {
+    const reqBody = { url: url };
+    const response = await fetch(`/api/images/${imageId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    if (response.ok) {
+        await dispatch(editImage(imageId, url));
+    } else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "Image edit unsuccessful" }
+        }
+    }
+}
+
 const initialState = { events: [], eventImages: [] };
 
 function eventsReducer(state = initialState, action) {
@@ -299,6 +327,17 @@ function eventsReducer(state = initialState, action) {
                 ...state,
                 event: updatedEventTagDeleted
             }
+        case EDIT_IMAGE:
+            const updatedUrl = action.payload.imageUrl;
+            const imageId = action.payload.imageId;
+            const updatedEventImages = state.eventImages["event images"].map(image => {
+                if (image.id === imageId) {
+                    return { ...image, url: updatedUrl };
+                } else {
+                    return image;
+                }
+            });
+            return { ...state, eventImages: { ...state.eventImages, "event images": updatedEventImages } };
         default:
             return state;
     }
