@@ -117,7 +117,7 @@ function CreateEventModal() {
                         required
                     />
                 </label>
-                <p>Privacy Settings</p>
+                <p>Privacy</p>
                 <label>
                     Private (only guests can view)
                     <input

@@ -1,4 +1,12 @@
 .form-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+label {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
