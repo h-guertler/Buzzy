@@ -76,7 +76,7 @@ function EventDetailPage() {
                 buttonText="X"
                 onButtonClick={handleButtonClick}
                 className="clickable"
-                modalComponent={<ConfirmDeleteAttendee username={username}/>}
+                modalComponent={<ConfirmDeleteAttendee username={username} userId={ids[usernames.indexOf(username)]} eventId={eventId}/>}
             />
         </div>
     ));
@@ -109,7 +109,7 @@ function EventDetailPage() {
                     modalComponent={<AddTagModal />}
                 />
             </div>
-            <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id) || user.id === event.owner_id))}>
+            <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id)))}>
                 {allGuestUsernames}
             </div>
             <div hidden={!(event && user && user.id === event.owner_id)}>
