@@ -17,7 +17,7 @@ const ConfirmDeleteEventImage = ({ eventImageId, deleteEventImage }) => {
             <b id="delete-event-image-confirm-delete">Delete Photo</b>
             <p>Would you like to delete this photo?</p>
 
-            <div className="delete-event-image-buttons-container">
+            <div id="delete-event-image-buttons-container">
                 <button className="delete-event-image-buttons-delete clickable" onClick={() => handleDelete(eventImageId)}>Yes (Delete Photo)</button>
                 <button className="delete-event-image-buttons clickable" onClick={closeModal}>No (Keep Photo)</button>
             </div>
