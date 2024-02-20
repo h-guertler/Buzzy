@@ -6,6 +6,7 @@ import AddTagModal from "../AddTagModal";
 import AddAttendeeModal from "../AddAttendeeModal";
 import AddEventImageModal from "../AddEventImageModal";
 import ConfirmDeleteTag from "../ConfirmDeleteTag";
+import ConfirmDeleteAttendee from "../ConfirmDeleteAttendee";
 import OpenModalButton from "../OpenModalButton";
 
 import "./EventDetailPage.css";
@@ -68,6 +69,18 @@ function EventDetailPage() {
         </div>
     )) : <div></div>
 
+    const deletableAttendees = usernames.map((username) => (
+        <div id={username}>
+            {username}
+            <OpenModalButton
+                buttonText="X"
+                onButtonClick={handleButtonClick}
+                className="clickable"
+                modalComponent={<ConfirmDeleteAttendee username={username}/>}
+            />
+        </div>
+    ));
+
     const imgArray = eventImages && eventImages["event images"] ? eventImages["event images"] : [];
 
     const sliceDate = (str) => str.slice(0, 16);
@@ -106,6 +119,9 @@ function EventDetailPage() {
                     className="clickable"
                     modalComponent={<AddAttendeeModal />}
                 />
+            </div>
+            <div className="deletable-attendees" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
+                <p>{deletableAttendees}</p>
             </div>
             <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id) || user.id === event.owner_id))}>
                 <OpenModalButton

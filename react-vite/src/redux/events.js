@@ -10,6 +10,7 @@ const ADD_IMAGE = 'events/addImage';
 const DELETE_IMAGE = 'events/deleteImage';
 const DELETE_TAG = 'events/deleteTag';
 const EDIT_IMAGE = 'events/editImage';
+const REMOVE_ATTENDEE = 'events/removeAttendee';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -69,6 +70,11 @@ const deleteTag = (tag, eventId) => ({
 const editImage = (imageId, imageUrl) => ({
     type: EDIT_IMAGE,
     payload: { imageId, imageUrl }
+});
+
+const removeAttendee = (eventId, userId) => ({
+    type: REMOVE_ATTENDEE,
+    payload: { eventId, userId }
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -271,6 +277,28 @@ export const fetchEditImage = (imageId, url) => async (dispatch) => {
     }
 }
 
+export const fetchRemoveAttendee = (eventId, userId) => async (dispatch) => {
+    const reqBody = { deleted_id: userId };
+    const response = await fetch(`/api/events/${eventId}/attendees`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    if (response.ok) {
+        await dispatch(removeAttendee(eventId, userId));
+    } else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "Guest removal unsuccessful" }
+        }
+    }
+}
+
 const initialState = { events: [], eventImages: [] };
 
 function eventsReducer(state = initialState, action) {
@@ -338,6 +366,18 @@ function eventsReducer(state = initialState, action) {
                 }
             });
             return { ...state, eventImages: { ...state.eventImages, "event images": updatedEventImages } };
+        case REMOVE_ATTENDEE:
+            // attendee is in usernames and in
+            // event.attendees
+            // i have the eventId and userId in removeAttendee
+            const updatedEventAttendeeDeleted = {
+                ...state.event,
+                attendees: state.event.attendees?.filter(attendeeId => attendeeId !== action.payload.userId)
+            }
+            return {
+                ...state,
+                event: updatedEventAttendeeDeleted
+            }
         default:
             return state;
     }
