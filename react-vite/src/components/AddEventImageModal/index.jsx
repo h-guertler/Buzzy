@@ -3,6 +3,7 @@ import { fetchAddImage, fetchGetEvent, fetchGetEventImages } from "../../redux/e
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import whitesquare from "../../../src/whitesquare.jpg";
 import "./index.css";
 
 function AddEventImageModal() {
@@ -37,12 +38,12 @@ function AddEventImageModal() {
 
 
     return (
-        <div>
+        <div id="add-image-container">
             <form onSubmit={handleSubmit}>
                 <h2>Add a Photo</h2>
                 <div>{errors}</div>
                 <p>Please enter the image's URL</p>
-                <img id="image" alt="event image" src={imageInfo} className="image-preview"/>
+                <img id="image" alt="your image here" src={imageInfo ? imageInfo : whitesquare} className="image-preview"/>
                 <input
                     type="url"
                     id="image-input"
@@ -52,7 +53,9 @@ function AddEventImageModal() {
                 />
                 <button
                     type="submit"
-                    disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}>
+                    disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}
+                    className={(imageInfo.endsWith(".jpg") || (imageInfo.endsWith(".jpeg"))) ? "clickable" : "disabledButton"}
+                    id="submit-image-button">
                     Add
                 </button>
             </form>
