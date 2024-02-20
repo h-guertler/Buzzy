@@ -16,7 +16,7 @@ const ConfirmDeleteTag = ({ eventId, tag }) => {
     return (
         <div className="delete-tag-container">
             <b id="delete-tag-confirm-delete">Delete Tag</b>
-            <p>Would you like to delete the tag {tag}?</p>
+            <p>Would you like to delete the tag <span className="tag-text">{tag}</span>?</p>
 
             <div className="delete-tag-buttons-container">
                 <button className="delete-tag-buttons-delete clickable" onClick={() => handleDelete(tag, eventId)}>Yes (Delete Tag)</button>
