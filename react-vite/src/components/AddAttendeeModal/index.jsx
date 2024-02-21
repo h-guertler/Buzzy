@@ -3,6 +3,7 @@ import { fetchAddAttendee, fetchGetEvent } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import "./index.css";
 
 function AddAttendeeModal() {
 
@@ -35,11 +36,11 @@ function AddAttendeeModal() {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="add-attendee-div">
+            <form onSubmit={handleSubmit} className="add-attendee-form">
                 <h2>Add a Guest</h2>
                 <div>{errors}</div>
-                <p>Please enter the guest email or username</p>
+                <p>Please enter the guest's email or username</p>
                 <input
                     type="text"
                     value={attendeeInfo}
@@ -47,7 +48,9 @@ function AddAttendeeModal() {
                 />
                 <button
                     type="submit"
-                    disabled={attendeeInfo.length < 2}>
+                    disabled={attendeeInfo.length < 2}
+                    className={attendeeInfo.length >= 2 ? "clickable" : "disabledButton"}
+                    id="add-attendee-button">
                     Add
                 </button>
             </form>
