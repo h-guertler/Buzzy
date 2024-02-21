@@ -3,6 +3,7 @@ import { fetchEditImage, fetchGetEvent, fetchGetEventImages } from "../../redux/
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import whitesquare from "../../../src/whitesquare.jpg";
 import "./index.css";
 
 function EditEventImage({imageId}) {
@@ -35,7 +36,7 @@ function EditEventImage({imageId}) {
     }
 
     return (
-    <div>
+    <div id="edit-image-container">
         <form onSubmit={handleSubmit}>
             <h2>Edit Image</h2>
             <div>{errors}</div>
@@ -43,14 +44,16 @@ function EditEventImage({imageId}) {
             <img id="image" alt="event image" src={imageInfo} className="image-preview"/>
             <input
                 type="url"
-                id="image-input"
+                id="edit-image-input"
                 value={imageInfo}
                 onChange={(e) => setImageInfo(e.target.value)}
                 placeholder="Use a URL ending with .jpg or .jpeg"
             />
             <button
                 type="submit"
-                disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}>
+                disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}
+                className={(!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))) ? "disabledButton" : "clickable"}
+                id="edit-image-button">
                 Edit
             </button>
         </form>
