@@ -3,6 +3,7 @@ import { fetchAddTag, fetchGetEvent } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import "./index.css";
 
 function AddTagModal() {
 
@@ -36,17 +37,21 @@ function AddTagModal() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}
+            className="add-tag-form">
                 <h2>Add a Tag</h2>
                 <div>{errors}</div>
                 <input
                     type="text"
                     value={tagInfo}
+                    placeholder='live music? marathon? potluck?'
                     onChange={(e) => setTagInfo(e.target.value)}
                 />
                 <button
                     type="submit"
-                    disabled={tagInfo.length < 2}>
+                    disabled={tagInfo.length < 2}
+                    className={tagInfo.length >= 2 ? "clickable" : "disabledButton"}
+                    id="add-tag-button">
                     Add
                 </button>
             </form>
