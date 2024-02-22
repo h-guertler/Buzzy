@@ -276,6 +276,7 @@ def get_event(id):
         new_date_hosted = request.json.get("date_hosted", None)
         new_location = request.json.get("location", None)
         new_private = request.json.get("private", None)
+        new_preview_image = request.json.get("preview_image", None)
 
         # Backend validations
         validation_errors = {}
@@ -294,9 +295,11 @@ def get_event(id):
         if not new_location == None:
             event.location = new_location
         if not new_private == None:
-            event.private == new_private
+            event.private = new_private
+        if not new_preview_image == None:
+            event.preview_image = new_preview_image
 
-        if new_name or new_description or new_date_hosted or new_location or new_private:
+        if new_name or new_description or new_date_hosted or new_location or new_private or new_preview_image:
             event.updated_at = datetime.utcnow()
 
         # Adds any changes to the database

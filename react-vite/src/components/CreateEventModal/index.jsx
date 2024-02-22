@@ -46,7 +46,6 @@ function CreateEventModal() {
 
         try {
             response = await dispatch(fetchCreateEvent(newEvent));
-            console.log("res: ", response)
             if (response && !response.location) {
                 setErrors(response);
             } else {
