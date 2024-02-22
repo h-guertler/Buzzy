@@ -49,17 +49,20 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu} className="clickable">
-        <i className="fas fa-user-circle" />
+      <button onClick={toggleMenu} className="clickable" id="menu-button-user-icon">
+        <i className="fas fa-user-circle fa-2x" />
       </button>
       {showMenu && (
         <ul className={"profile-dropdown menu-ul"} ref={ulRef}>
           {user ? (
-            <>
+            <div className="menu-ul-logged-in">
+              <div id="username-and-email">
               <li>Hello, {user.username}</li>
               <li>{user.email}</li>
+              </div>
+              <div id="not-logout-buttons">
               <li>
-                <button onClick={directToProfile}>My Profile</button>
+                <button onClick={directToProfile} className="user-menu-not-logout-button clickable">My Profile</button>
               </li>
               <li>
               <OpenModalButton
@@ -68,23 +71,30 @@ function ProfileButton() {
                 modalComponent={<CreateEventModal />}
               />
               </li>
+              </div>
+              <div id="logout-button-div">
               <li>
                 <button onClick={logout} className="clickable">Log Out</button>
               </li>
-            </>
+              </div>
+            </div>
           ) : (
-            <>
+            <div className="not-logged-in-menu">
+            <div className="log-in-div">
               <OpenModalButton
                 buttonText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
+              </div>
+              <div className="log-out-div">
               <OpenModalButton
                 buttonText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            </>
+              </div>
+            </div>
           )}
         </ul>
       )}
