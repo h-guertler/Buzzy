@@ -11,8 +11,8 @@ function Navigation() {
   return (
     <div className="nav-div">
         <div className="logo-div clickable" onClick={() => navigate("/")}>
-          <div>Buzzy</div>
-          <img src={honeycomb} alt="honeycomb logo" />
+          <div id="logo-text">BUZZY</div>
+          <img src={honeycomb} alt="honeycomb logo" id="logo-img" />
         </div>
         <div className="header-inner-div">
           <ProfileButton />

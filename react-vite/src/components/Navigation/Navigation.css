@@ -6,11 +6,32 @@
 .nav-div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 10px;
+  padding-top: 7px;
 }
 
 .logo-div {
   display: flex;
   align-items: center;
+  margin-left: 10px;
+}
+
+#logo-text {
+  font-weight: 300;
+  font-size: 1.5em;
+}
+
+#logo-img {
+  height: 2.2em;
+  margin-left: 3px;
+}
+
+#menu-button-user-icon {
+  border: none;
+  background-color: white;
+  margin-right: 6px;
 }
 
 .clickable:hover {
