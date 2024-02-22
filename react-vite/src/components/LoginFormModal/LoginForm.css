@@ -22,7 +22,7 @@ h1 {
     width: 71%;
 }
 
-button {
+form>button {
     margin-top: 12px;
     margin-bottom: 14px;
     padding: 4px 7px;

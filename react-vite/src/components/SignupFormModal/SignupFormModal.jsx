@@ -43,45 +43,57 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
+        <div className="label-div">
         <label>
           Email
           <input
             type="text"
+            id="email-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
+        </div>
         {errors.email && <p>{errors.email}</p>}
+        <div className="label-div">
         <label>
           Username
           <input
             type="text"
+            id="username-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </label>
+        </div>
         {errors.username && <p>{errors.username}</p>}
+        <div className="label-div">
         <label>
           Password
           <input
             type="password"
+            id="password-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
+        </div>
         {errors.password && <p>{errors.password}</p>}
+        <div className="label-div">
         <label>
           Confirm Password
           <input
             type="password"
+            id="confirm-password-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
+        </div>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
