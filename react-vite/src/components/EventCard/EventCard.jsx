@@ -50,7 +50,7 @@ function EventCard(props) {
                     buttonText="Update"
                     onButtonClick={handleButtonClick}
                     className="clickable"
-                    modalComponent={<UpdateEventModal />}
+                    modalComponent={<UpdateEventModal event={event} />}
                 />
                 <OpenModalButton
                     buttonText="Delete"

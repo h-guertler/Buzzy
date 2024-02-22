@@ -11,6 +11,7 @@ const DELETE_IMAGE = 'events/deleteImage';
 const DELETE_TAG = 'events/deleteTag';
 const EDIT_IMAGE = 'events/editImage';
 const REMOVE_ATTENDEE = 'events/removeAttendee';
+const UPDATE_EVENT = 'events/updateEvent';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -75,6 +76,11 @@ const editImage = (imageId, imageUrl) => ({
 const removeAttendee = (eventId, userId, username) => ({
     type: REMOVE_ATTENDEE,
     payload: { eventId, userId, username }
+});
+
+const updateEvent = (eventId, event) => ({
+    type: UPDATE_EVENT,
+    payload: { eventId, event }
 });
 
 export const fetchGetEvent = (eventId) => async (dispatch) => {
@@ -299,6 +305,40 @@ export const fetchRemoveAttendee = (eventId, userId, username) => async (dispatc
     }
 }
 
+export const fetchUpdateEvent = (eventId, event) => async (dispatch) => {
+    const { name, description, date_hosted, location, preview_image, privacy } = event;
+    const reqBody = {
+        name: name,
+        description: description,
+        date_hosted: date_hosted,
+        location: location,
+        preview_image: preview_image,
+        private: privacy
+    };
+
+    const response = await fetch(`/api/events/${eventId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    });
+
+    console.log("res: ", response)
+
+    if (response.ok) {
+        const data = await response.json();
+        await dispatch(updateEvent(eventId, data));
+    } else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "Event edit unsuccessful" }
+        }
+    }
+}
+
 const initialState = { events: [], eventImages: [] };
 
 function eventsReducer(state = initialState, action) {
@@ -377,6 +417,18 @@ function eventsReducer(state = initialState, action) {
                 event: updatedEventAttendeeDeleted,
                 usernames: updatedUsernamesNameRemoved,
             }
+        case UPDATE_EVENT:
+            const updatedEventsArray = state.events.events?.map((event) => {
+                if (event.id === action.payload.eventId) {
+                    return action.payload.event;
+                }
+                return event;
+            });
+            return {
+                ...state,
+                event: action.payload.event,
+                events: updatedEventsArray
+            };
         default:
             return state;
     }
