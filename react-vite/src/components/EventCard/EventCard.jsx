@@ -38,13 +38,15 @@ function EventCard(props) {
     }
 
     return (
-        <div key={event.name} onClick={navigateToEventDetail} className="clickable">
+        <div key={event.name} onClick={navigateToEventDetail} className="clickable event-card">
             <h3>
                 {event.name}
             </h3>
-            <div>{event.location}</div>
+            <div className="img-container">
+                <img className="preview_image" src={event.preview_image ? event.preview_image : "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="event preview image" />
+            </div>
             <div>{sliceDate(event.date_hosted.toString())}</div>
-            <img className="preview_image" src={event.preview_image ? event.preview_image : "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="event preview image" />
+            <div>{event.location}</div>
             <div className="button-div" hidden={!ownedByUser}>
                 <OpenModalButton
                     buttonText="Update"

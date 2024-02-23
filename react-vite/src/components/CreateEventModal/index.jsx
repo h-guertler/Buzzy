@@ -125,7 +125,6 @@ function CreateEventModal() {
                         id="preview-image-input"
                         value={previewImage}
                         onChange={(e) => setPreviewImage(e.target.value)}
-                        required
                     />
                 </label>
                 </div>
@@ -156,13 +155,13 @@ function CreateEventModal() {
                         description.length < 10 ||
                         description.length > 255 ||
                         !location ||
-                        !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg"))
+                        (previewImage && !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg")))
                         ? "disabled" : "clickable"}
                     disabled={name.length < 2 ||
                         description.length < 10 ||
                         description.length > 255 ||
                         !location ||
-                        !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg"))}
+                        (previewImage && !(previewImage.endsWith(".jpeg") && previewImage.endsWith(".jpg")))}
                     >
                     Create
                 </button>

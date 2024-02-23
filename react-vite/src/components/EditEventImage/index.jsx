@@ -52,7 +52,7 @@ function EditEventImage({imageId}) {
             <button
                 type="submit"
                 disabled={!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))}
-                className={(!(imageInfo.endsWith(".jpg") && !(imageInfo.endsWith(".jpeg")))) ? "disabledButton" : "clickable"}
+                className={(!(imageInfo.endsWith(".jpg") && (imageInfo&& !(imageInfo.endsWith(".jpeg"))))) ? "disabledButton" : "clickable"}
                 id="edit-image-button">
                 Edit
             </button>
