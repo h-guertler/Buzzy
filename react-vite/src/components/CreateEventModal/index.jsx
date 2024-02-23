@@ -61,7 +61,8 @@ function CreateEventModal() {
         <div className="form-container">
             <h1>Create Event</h1>
             {errors && Object.keys(errors).length  ? Object.values(errors) : ""}
-            <form disabled={isDisabled} onSubmit={handleSubmit}>
+            <form disabled={isDisabled} onSubmit={handleSubmit} id="create-event-form">
+            <div className="label-div">
                 <label htmlFor="name-input">
                     Name
                     <input
@@ -73,19 +74,26 @@ function CreateEventModal() {
                         required
                     />
                 </label>
-                <label htmlFor="description-input">
+                </div>
+                <div className="label-div description-div">
+                <label htmlFor="description-input" id="description-input-label">
                     Description
-                    <input
+                </label>
+                    <textarea
                         type="textarea"
                         placeholder="Share some details about your event"
                         id="description-input"
+                        cols={22}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div className="label-div date-div">
                 <label htmlFor="date-input">
                 Date and Time
+                </label>
+                    <div className="customDatePickerWidth">
                     <DateTimePicker
                         id="date-input"
                         value={dateHosted}
@@ -93,7 +101,9 @@ function CreateEventModal() {
                         minDate={new Date()}
                         required
                     />
-                </label>
+                    </div>
+                </div>
+                <div className="label-div">
                 <label htmlFor="location-input">
                     Location
                     <input
@@ -105,6 +115,8 @@ function CreateEventModal() {
                         required
                     />
                 </label>
+                </div>
+                <div className="label-div">
                 <label htmlFor="preview-image-input">
                     Preview Image
                     <input
@@ -116,7 +128,9 @@ function CreateEventModal() {
                         required
                     />
                 </label>
-                <p>Privacy</p>
+                </div>
+                <p id="privacy-para">Privacy</p>
+                <div className="label-div radio-div">
                 <label>
                     Private (only guests can view)
                     <input
@@ -135,7 +149,23 @@ function CreateEventModal() {
                     onChange={handlePrivacyChange}
                     />
                 </label>
-                <button type="submit">Create</button>
+                </div>
+                <button
+                    type="submit"
+                    className={name.length < 2 ||
+                        description.length < 10 ||
+                        description.length > 255 ||
+                        !location ||
+                        !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg"))
+                        ? "disabled" : "clickable"}
+                    disabled={name.length < 2 ||
+                        description.length < 10 ||
+                        description.length > 255 ||
+                        !location ||
+                        !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg"))}
+                    >
+                    Create
+                </button>
             </form>
         </div>
     )
