@@ -78,6 +78,7 @@ function UpdateEventModal(event) {
             <h1>Edit Event</h1>
             {errors && Object.keys(errors).length  ? Object.values(errors) : ""}
             <form disabled={isDisabled} onSubmit={handleSubmit}>
+                <div className="label-div">
                 <label htmlFor="name-input">
                     Name
                     <input
@@ -89,19 +90,26 @@ function UpdateEventModal(event) {
                         required
                     />
                 </label>
-                <label htmlFor="description-input">
+                </div>
+                <div className="label-div description-div">
+                <label htmlFor="description-input" id="description-input-label">
                     Description
-                    <input
+                </label>
+                    <textarea
                         type="textarea"
                         placeholder="Share some details about your event"
                         id="description-input"
+                        cols={22}
                         value={newDescription}
                         onChange={(e) => setNewDescription(e.target.value)}
                         required
                     />
-                </label>
+                </div>
+                <div className="label-div date-div">
                 <label htmlFor="date-input">
                 Date and Time
+                </label>
+                <div className="customDatePickerWidth">
                     <DateTimePicker
                         id="date-input"
                         value={newDateHosted}
@@ -109,7 +117,9 @@ function UpdateEventModal(event) {
                         minDate={new Date()}
                         required
                     />
-                </label>
+                </div>
+                </div>
+                <div className="label-div">
                 <label htmlFor="location-input">
                     Location
                     <input
@@ -121,6 +131,8 @@ function UpdateEventModal(event) {
                         required
                     />
                 </label>
+                </div>
+                <div className="label-div">
                 <label htmlFor="preview-image-input">
                     Preview Image
                     <input
@@ -129,9 +141,12 @@ function UpdateEventModal(event) {
                         id="preview-image-input"
                         value={newPreviewImage}
                         onChange={(e) => setNewPreviewImage(e.target.value)}
+                        required
                     />
                 </label>
-                <p>Privacy</p>
+                </div>
+                <p id="privacy-para">Privacy</p>
+                <div className="label-div radio-div">
                 <label>
                     Private (only guests can view)
                     <input
@@ -150,7 +165,22 @@ function UpdateEventModal(event) {
                     onChange={handlePrivacyChange}
                     />
                 </label>
-                <button type="submit" disabled={newName.length < 2}>Edit</button>
+                </div>
+                <button type="submit"
+                className={newName.length < 2 ||
+                    newDescription.length < 10 ||
+                    newDescription.length > 255 ||
+                    !newLocation ||
+                    !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))
+                    ? "disabled" : "clickable"}
+                disabled={name.length < 2 ||
+                    description.length < 10 ||
+                    description.length > 255 ||
+                    !location ||
+                    !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))}
+                >
+                    Edit
+                </button>
             </form>
         </div>
     )
