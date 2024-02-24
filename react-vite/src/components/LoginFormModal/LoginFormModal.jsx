@@ -37,7 +37,7 @@ function LoginFormModal() {
           Email
           <input
             type="text"
-            id="email-input"
+            id="email-login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

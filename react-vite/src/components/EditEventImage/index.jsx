@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { fetchEditImage, fetchGetEvent, fetchGetEventImages } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -35,13 +35,15 @@ function EditEventImage({imageId}) {
         }
     }
 
+    const editImageMessage = "Please enter the image's new URL";
+
     return (
     <div id="edit-image-container">
         <form onSubmit={handleSubmit}>
             <h2>Edit Image</h2>
             <div>{errors}</div>
-            <p>Please enter the image's new URL</p>
-            <img id="image" alt="event image" src={imageInfo} className="image-preview"/>
+            <p>{editImageMessage}</p>
+            <img id="image" alt="event image" src={imageInfo ? imageInfo : whitesquare} className="image-preview"/>
             <input
                 type="url"
                 id="edit-image-input"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchGetEvent, fetchGetEventImages, fetchGetUsernames } from "../../redux/events";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,7 +58,7 @@ function EventDetailPage() {
     if (tags) tagString = tags.join(" • ");
 
     const deletableTags = event && event.tags ? event.tags.map((tag) => (
-        <div id={tag}>
+        <div id={tag} key={tag}>
             {tag}
             <OpenModalButton
                 buttonText="X"
@@ -70,7 +70,7 @@ function EventDetailPage() {
     )) : <div></div>
 
     const deletableAttendees = usernames.map((username) => (
-        <div id={username}>
+        <div id={username} key={username}>
             {username}
             <OpenModalButton
                 buttonText="X"
@@ -92,8 +92,8 @@ function EventDetailPage() {
             <h1>Loading...</h1>
         ) : (
             <>
-            <img className="detailPreviewImg" src={previewImage} alt="event preview image"/>
             <h1>{event && event.name ? event.name : ""}</h1>
+            <img className="detailPreviewImg" src={previewImage} alt="event preview image"/>
             <div>{event && event.date_hosted ? sliceDate(event.date_hosted.toString()) : ""}</div>
             <div>{event && event.location ? event.location : ""}</div>
             <p>{event && event.description ? event.description : ""}</p>

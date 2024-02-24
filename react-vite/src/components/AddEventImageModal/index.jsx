@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { fetchAddImage, fetchGetEvent, fetchGetEventImages } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -36,13 +36,14 @@ function AddEventImageModal() {
         }
     }
 
+    const addImageMessage = "Please enter the image's URL";
 
     return (
         <div id="add-image-container">
             <form onSubmit={handleSubmit}>
                 <h2>Add a Photo</h2>
                 <div>{errors}</div>
-                <p>Please enter the image's URL</p>
+                <p>{addImageMessage}</p>
                 <img id="image" alt="your image here" src={imageInfo ? imageInfo : whitesquare} className="image-preview"/>
                 <input
                     type="url"

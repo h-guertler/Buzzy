@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
@@ -20,7 +19,6 @@ function EventCard(props) {
     if (user && user.id) userId = user.id;
 
     const sliceDate = (str) => str.slice(0, 16);
-    const ownedByUser = (userId && event.owner_id == userId);
 
     const navigateToEventDetail = (e) => {
         e.stopPropagation();
@@ -47,7 +45,8 @@ function EventCard(props) {
             </div>
             <div>{sliceDate(event.date_hosted.toString())}</div>
             <div>{event.location}</div>
-            <div className="button-div" hidden={!ownedByUser}>
+            {(userId && event && event.owner_id == userId) && (
+            <div className="button-div">
                 <OpenModalButton
                     buttonText="Update"
                     onButtonClick={handleButtonClick}
@@ -60,7 +59,7 @@ function EventCard(props) {
                     className="clickable"
                     modalComponent={<ConfirmDeleteEvent eventId={event.id} deleteEvent={deleteEvent}/>}
                 />
-            </div>
+            </div>)}
         </div>
     )
 }
