@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { fetchAddTag, fetchGetEvent } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";

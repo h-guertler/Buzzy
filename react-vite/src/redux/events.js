@@ -324,8 +324,6 @@ export const fetchUpdateEvent = (eventId, event) => async (dispatch) => {
         body: JSON.stringify(reqBody)
     });
 
-    console.log("res: ", response)
-
     if (response.ok) {
         const data = await response.json();
         await dispatch(updateEvent(eventId, data));
@@ -343,24 +341,30 @@ const initialState = { events: [], eventImages: [] };
 
 function eventsReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_EVENT:
+        case GET_EVENT: {
             return { ...state, event: action.payload };
-        case GET_ALL_EVENTS:
+        }
+        case GET_ALL_EVENTS: {
             return { ...state, events: action.payload };
-        case DELETE_EVENT:
+        }
+        case DELETE_EVENT: {
             return { ...state, events: state.events.events.filter(event => event.id != action.id)};
-        case GET_EVENT_IMAGES:
+        }
+        case GET_EVENT_IMAGES: {
             return { ...state, eventImages: action.payload };
-        case GET_USERNAMES:
+        }
+        case GET_USERNAMES: {
             return { ...state, usernames: action.payload };
-        case ADD_ATTENDEE:
+        }
+        case ADD_ATTENDEE: {
             const updatedEvent = {
                 ...state.event,
                 attendees: [...state.event.attendees, action.payload.attendeeId],
             }
             const updatedUsernames = [...state.usernames, action.payload.reqBody.user_info]
             return { ...state, event: updatedEvent, usernames: updatedUsernames };
-        case CREATE_EVENT:
+        }
+        case CREATE_EVENT: {
             const updatedEvents = {events: [...state.events.events, action.payload]};
             let updatedEventAdded = action.payload
             return {
@@ -368,7 +372,8 @@ function eventsReducer(state = initialState, action) {
                 events: updatedEvents,
                 event: updatedEventAdded
             }
-        case ADD_TAG:
+        }
+        case ADD_TAG: {
             const updatedEventWithTags = {
                 ...state.event,
                 tags: [...state.event.tags, action.payload]
@@ -377,16 +382,19 @@ function eventsReducer(state = initialState, action) {
                 ...state,
                 event: updatedEventWithTags
             };
-        case ADD_IMAGE:
+        }
+        case ADD_IMAGE: {
             const updatedEventImgs = [...state.eventImages["event images"], action.payload]
             return { ...state, eventImages: updatedEventImgs }
-        case DELETE_IMAGE:
+        }
+        case DELETE_IMAGE: {
             const updatedEventImgsDeleted = {
                 ...state.eventImages,
                 "event images": state.eventImages["event images"]?.filter(image => image.id !== action.payload)
             };
             return { ...state, eventImages: updatedEventImgsDeleted };
-        case DELETE_TAG:
+        }
+        case DELETE_TAG: {
             const updatedEventTagDeleted = {
                 ...state.event,
                 tags: state.event.tags?.filter(tag => tag !== action.payload.tag)
@@ -395,7 +403,8 @@ function eventsReducer(state = initialState, action) {
                 ...state,
                 event: updatedEventTagDeleted
             }
-        case EDIT_IMAGE:
+        }
+        case EDIT_IMAGE: {
             const updatedUrl = action.payload.imageUrl;
             const imageId = action.payload.imageId;
             const updatedEventImages = state.eventImages["event images"].map(image => {
@@ -406,7 +415,8 @@ function eventsReducer(state = initialState, action) {
                 }
             });
             return { ...state, eventImages: { ...state.eventImages, "event images": updatedEventImages } };
-        case REMOVE_ATTENDEE:
+        }
+        case REMOVE_ATTENDEE: {
             const updatedEventAttendeeDeleted = {
                 ...state.event,
                 attendees: state.event.attendees?.filter(attendeeId => attendeeId !== action.payload.userId)
@@ -417,7 +427,8 @@ function eventsReducer(state = initialState, action) {
                 event: updatedEventAttendeeDeleted,
                 usernames: updatedUsernamesNameRemoved,
             }
-        case UPDATE_EVENT:
+        }
+        case UPDATE_EVENT: {
             const updatedEventsArray = state.events.events?.map((event) => {
                 if (event.id === action.payload.eventId) {
                     return action.payload.event;
@@ -429,6 +440,7 @@ function eventsReducer(state = initialState, action) {
                 event: action.payload.event,
                 events: updatedEventsArray
             };
+        }
         default:
             return state;
     }

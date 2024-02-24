@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchUpdateEvent } from "../../redux/events";
@@ -34,6 +34,7 @@ function UpdateEventModal(event) {
 
     useEffect(() => {
         setNewDateHosted(origDate);
+        // eslint-disable-next-line
     }, [dispatch]);
 
     const handleSubmit = async (e) => {

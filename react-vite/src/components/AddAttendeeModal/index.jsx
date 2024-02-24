@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { fetchAddAttendee, fetchGetEvent } from "../../redux/events";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -34,13 +34,15 @@ function AddAttendeeModal() {
         }
     }
 
+    const addGuestMessage = "Please enter the guest's email or username";
+
 
     return (
         <div className="add-attendee-div">
             <form onSubmit={handleSubmit} className="add-attendee-form">
                 <h2>Add a Guest</h2>
                 <div>{errors}</div>
-                <p>Please enter the guest's email or username</p>
+                <p>{addGuestMessage}</p>
                 <input
                     type="text"
                     value={attendeeInfo}

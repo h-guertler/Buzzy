@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import loadingplaceholderimg from "../../../src/loadingplaceholderimage.png";
 import { fetchDeleteImage } from "../../redux/events";
@@ -20,7 +19,7 @@ function EventImages (images) {
         <div key={image.id}>
             <img className="image" src={image.url ? image.url : loadingplaceholderimg} alt="event image"/>
             <div className="event-images-buttons-div"
-            hidden={!user && user.id === image.user_id}>
+            hidden={!user || (user && user.id !== image.user_id)}>
             <OpenModalButton
                 buttonText="Edit Photo"
                 className="clickable"
