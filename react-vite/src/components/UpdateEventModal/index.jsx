@@ -33,13 +33,10 @@ function UpdateEventModal(event) {
     };
 
     useEffect(() => {
-        console.log("useeff running")
-        console.log("orig date: ", origDate)
         setNewDateHosted(origDate);
     }, [dispatch]);
 
     const handleSubmit = async (e) => {
-        console.log("submitting form")
         e.stopPropagation();
         e.preventDefault();
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllEvents } from "../../redux/events";
 import EventCard from "../EventCard/EventCard";
+import "./LandingPage.css";
 
 function LandingPage() {
   const dispatch = useDispatch();
@@ -21,9 +22,14 @@ function LandingPage() {
   ));
 
     return (
-        <div>
+      <div>
+        <h1>Events</h1>
+        <div className="container-for-grid">
+          <div className="events-grid">
             {renderedEvents}
+          </div>
         </div>
+      </div>
     )
 }
 
