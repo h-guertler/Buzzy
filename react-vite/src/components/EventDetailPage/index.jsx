@@ -58,7 +58,7 @@ function EventDetailPage() {
     if (tags) tagString = tags.join(" • ");
 
     const deletableTags = event && event.tags ? event.tags.map((tag) => (
-        <div id={tag} key={tag}>
+        <div id={tag} key={tag} className="item-div">
             {tag}
             <OpenModalButton
                 buttonText="X"
@@ -70,7 +70,7 @@ function EventDetailPage() {
     )) : <div></div>
 
     const deletableAttendees = usernames.map((username) => (
-        <div id={username} key={username}>
+        <div id={username} key={username} className="item-div">
             {username}
             <OpenModalButton
                 buttonText="X"
@@ -92,36 +92,49 @@ function EventDetailPage() {
             <h1>Loading...</h1>
         ) : (
             <>
-            <h1>{event && event.name ? event.name : ""}</h1>
-            <img className="detailPreviewImg" src={previewImage} alt="event preview image"/>
-            <div>{event && event.date_hosted ? sliceDate(event.date_hosted.toString()) : ""}</div>
-            <div>{event && event.location ? event.location : ""}</div>
-            <p>{event && event.description ? event.description : ""}</p>
-            <p hidden={event && user && user.id === event.owner_id}>{tagString}</p>
-            <div className="deletable-tags" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
-            <p>{deletableTags}</p>
-            </div>
-            <div hidden={!(event && user && user.id === event.owner_id)}>
-                <OpenModalButton
-                    buttonText="Add A Tag"
-                    onButtonClick={handleButtonClick}
-                    className="clickable"
-                    modalComponent={<AddTagModal />}
-                />
-            </div>
-            <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id)))}>
-                {allGuestUsernames}
-            </div>
-            <div hidden={!(event && user && user.id === event.owner_id)}>
-                <OpenModalButton
-                    buttonText="Add a Guest"
-                    onButtonClick={handleButtonClick}
-                    className="clickable"
-                    modalComponent={<AddAttendeeModal />}
-                />
-            </div>
-            <div className="deletable-attendees" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
-                <p>{deletableAttendees}</p>
+            <div id="image-and-event-info-div">
+                <div id="image-date-place-div">
+                <h1>{event && event.name ? event.name : ""}</h1>
+                    <img className="detailPreviewImg" src={previewImage} alt="event preview image" id="event-preview-image"/>
+                    <div id="event-date-hosted">{event && event.date_hosted ? sliceDate(event.date_hosted.toString()) : ""}</div>
+                    <div>{event && event.location ? event.location : ""}</div>
+                </div>
+                <div id="description-div">
+                    <h3>About</h3>
+                    <p>{event && event.description ? event.description : ""}</p>
+                </div>
+                <div id="tag-div">
+                    <h3>Tags</h3>
+                    <p hidden={event && user && user.id === event.owner_id}>{tagString}</p>
+                    <div className="deletable-tags" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
+                        <div>{deletableTags}</div>
+                    </div>
+                    <div hidden={!(event && user && user.id === event.owner_id)} className="modal-div">
+                        <OpenModalButton
+                            buttonText="Add A Tag"
+                            onButtonClick={handleButtonClick}
+                            className="clickable"
+                            modalComponent={<AddTagModal />}
+                        />
+                    </div>
+                    </div>
+            <div id="guest-div">
+                <h3>Going</h3>
+                <div hidden={!(event && user && event.attendees && (event.attendees.includes(user.id)) && event.owner_id !== user.id)}>
+                    {allGuestUsernames}
+                </div>
+                <div className="deletable-attendees" hidden={(!event || !user) || (event && user && (event.owner_id !== user.id))}>
+                    {deletableAttendees}
+                </div>
+                <div hidden={!(event && user && user.id === event.owner_id)} className="modal-div">
+                    <OpenModalButton
+                        buttonText="Add a Guest"
+                        onButtonClick={handleButtonClick}
+                        className="clickable"
+                        modalComponent={<AddAttendeeModal />}
+                    />
+                </div>
+                </div>
             </div>
             <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id) || user.id === event.owner_id))}>
                 <OpenModalButton
