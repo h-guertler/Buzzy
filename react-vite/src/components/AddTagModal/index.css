@@ -21,3 +21,7 @@
 #add-tag-button.disabledButton {
     background-color: lightgrey;
 }
+
+.deletable-tags, .deletable-attendees {
+    margin-bottom: 15px;
+}

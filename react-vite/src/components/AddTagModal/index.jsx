@@ -44,13 +44,13 @@ function AddTagModal() {
                 <input
                     type="text"
                     value={tagInfo}
-                    placeholder='live music? marathon? potluck?'
+                    placeholder='Live music? Marathon? Potluck?'
                     onChange={(e) => setTagInfo(e.target.value)}
                 />
                 <button
                     type="submit"
-                    disabled={tagInfo.length < 2}
-                    className={tagInfo.length >= 2 ? "clickable" : "disabledButton"}
+                    disabled={tagInfo.length < 2 || tagInfo.length > 20}
+                    className={tagInfo.length >= 2 && tagInfo.length < 20 ? "clickable" : "disabledButton"}
                     id="add-tag-button">
                     Add
                 </button>
