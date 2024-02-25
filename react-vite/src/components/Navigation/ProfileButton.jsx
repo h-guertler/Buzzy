@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { thunkLogout } from "../../redux/session";
-import OpenModalMenuItem from "./OpenModalMenuItem";
+import OpenModalButton from "../OpenModalButton"
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import CreateEventModal from "../CreateEventModal";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -38,34 +41,60 @@ function ProfileButton() {
     closeMenu();
   };
 
+  const directToProfile = (e) => {
+    e.preventDefault();
+    navigate(`/users/${user.id}`);
+    closeMenu();
+  }
+
   return (
     <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
+      <button onClick={toggleMenu} className="clickable" id="menu-button-user-icon">
+        <i className="fas fa-user-circle fa-2x" />
       </button>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <ul className={"profile-dropdown menu-ul"} ref={ulRef}>
           {user ? (
-            <>
-              <li>{user.username}</li>
+            <div className="menu-ul-logged-in">
+              <div id="username-and-email">
+              <li>Hello, {user.username}</li>
               <li>{user.email}</li>
+              </div>
+              <div id="not-logout-buttons">
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button onClick={directToProfile} className="user-menu-not-logout-button clickable">My Profile</button>
               </li>
-            </>
+              <li>
+              <OpenModalButton
+                buttonText="Create Event"
+                onItemClick={closeMenu}
+                modalComponent={<CreateEventModal />}
+              />
+              </li>
+              </div>
+              <div id="logout-button-div">
+              <li>
+                <button onClick={logout} className="clickable">Log Out</button>
+              </li>
+              </div>
+            </div>
           ) : (
-            <>
-              <OpenModalMenuItem
-                itemText="Log In"
+            <div className="not-logged-in-menu">
+            <div className="log-in-div">
+              <OpenModalButton
+                buttonText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
-              <OpenModalMenuItem
-                itemText="Sign Up"
+              </div>
+              <div className="log-out-div">
+              <OpenModalButton
+                buttonText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            </>
+              </div>
+            </div>
           )}
         </ul>
       )}

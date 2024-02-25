@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
-from flask_login import login_required
-from app.models import User
+from flask_login import login_required, current_user
+from app.models import User, db, Event_Image, Event
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,3 +23,33 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<int:id>/eventimages')
+def get_user_event_images(id):
+    user = User.query.get(id)
+    # Returns a 404 error if there is no user with the specified ID
+    if not user:
+        error = 'User with the specified ID could not be found'
+        return error, 404
+
+    # Queries for all of the user's event images
+    query = db.session.query(Event_Image) \
+        .filter(Event_Image.user_id == id) \
+        .all()
+
+    images = [image.to_dict() for image in query]
+
+    return { "event images": images }
+
+
+@user_routes.route('/current/events')
+def get_user_events():
+    current_user_id = current_user.id
+
+    query = db.session.query(Event) \
+        .filter(Event.owner_id == current_user_id) \
+        .all()
+
+    events = [event.to_dict() for event in query]
+
+    return { "events": events }

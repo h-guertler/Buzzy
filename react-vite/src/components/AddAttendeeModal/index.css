@@ -1,0 +1,23 @@
+.add-attendee-form {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+#add-attendee-button {
+    padding: 4px 7px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-top: 18px;
+}
+
+#add-attendee-button.disabledButton {
+    background-color: lightgrey;
+}

@@ -1,0 +1,85 @@
+.update-event-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.label-div {
+    width: 100%;
+    margin-bottom: 15px;
+    margin-left: 15%;
+    margin-right: 5%;
+}
+
+#name-input {
+    width: 70%;
+    margin-left: 8px;
+}
+
+#description-input {
+    min-height: 60px;
+    width: 59%;
+    overflow-y: auto;
+    font-size: 13px;
+}
+
+.description-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.date-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.customDatePickerWidth,
+.customDatePickerWidth > .react-datetime-picker,
+.customDatePickerWidth > .react-datetime-picker > .react-datetime-picker__wrapper,
+.customDatePickerWidth > .react-datetime-picker > .react-datetime-picker__wrapper > .react-datetime-picker__inputGroup,
+.customDatePickerWidth > .react-datetime-picker > .react-datetime-picker__wrapper > .react-datetime-picker__inputGroup > input {
+    font-size: 11px;
+}
+
+#location-input {
+    width: 65%;
+    margin-left: 8px;
+}
+
+#preview-image-input {
+    margin-left: 8px;
+    width: 53%;
+}
+
+#privacy-para {
+    align-self: flex-start;
+    margin-left: 7.6%;
+}
+
+.radio-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: -3%;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.radio-div input {
+    cursor: pointer;
+}
+
+.labeldiv>input {
+    margin-left: 8px;
+}
+
+.disabled {
+    color: black;
+    background-color: lightgrey;
+}

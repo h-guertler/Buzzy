@@ -1,0 +1,24 @@
+.label-div {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.labeldiv>input {
+    margin-left: 8px;
+}
+
+#email-input {
+    width: 79.5%;
+}
+
+#username-input {
+    width: 72.2%;
+}
+
+#password-input {
+    width: 71.5%;
+}
+
+#confirm-password-input {
+    width: 57%;
+}

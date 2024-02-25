@@ -1,0 +1,70 @@
+.detailPreviewImg {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+}
+
+#image-and-event-info-div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid darkgrey;
+    flex: 1;
+}
+
+#image-date-place-div {
+    flex: 1;
+}
+
+#event-date-hosted {
+    margin-top: 10px;
+}
+
+#description-div {
+    flex: 1;
+}
+
+#tag-div {
+    flex: 1;
+}
+
+#guest-div {
+    flex: 1;
+}
+
+.item-div {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.item-div>button {
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: white;
+    margin-left: 6px;
+    height: 21px;
+    width: 21px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.modal-div>button {
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px;
+    border-radius: 4px;
+    padding: 4px 10px;
+}
+
+h1 {
+    margin-top: 0px;
+}
+
+.detail-page-div {
+    background-color: #F0F8FF;
+    margin-top: -10px;
+}

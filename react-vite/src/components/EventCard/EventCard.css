@@ -1,0 +1,42 @@
+.img-container {
+    height: 220px;
+    width: 220px;
+}
+
+.img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 17pt;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 225px;
+    /* height: 328px; */
+    margin: 5px;
+    padding: 5px;
+}
+
+.button-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+}
+
+.button-div>button {
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin-right: 7px;
+}

@@ -10,6 +10,7 @@ def seed_events():
         date_hosted="2024-10-10 8:00:00.000000",
         attendees=[],
         tags=[],
+        preview_image="https://images.joseartgallery.com/100736/conversions/what-kind-of-art-is-popular-right-now-thumb1280.jpg",
         private=False)
     metal_show = Event(
         owner_id=2,
@@ -19,6 +20,7 @@ def seed_events():
         date_hosted="2024-05-01 22:00:00.000000",
         attendees=[],
         tags=[],
+        preview_image="https://www.yondervacationrentals.com/wp-content/uploads/2022/12/Live-Music-Shutterstock.jpg",
         private=False)
     house_party = Event(
         owner_id=1,
@@ -26,9 +28,9 @@ def seed_events():
         description="it's all in the name",
         location="123 residential st, anywhere, usa",
         date_hosted="2025-12-31 21:00:00.000000",
-        attendees=[],
-        tags=[],
-        private=True)
+        attendees=[2],
+        tags=["board games", "casual", "potluck", "collab playlist"],
+        private=False)
 
     db.session.add(craft_show)
     db.session.add(metal_show)
