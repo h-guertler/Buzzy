@@ -87,7 +87,7 @@ function EventDetailPage() {
 
     return (
 
-        <div>
+        <div className="detail-page-div">
             {isLoading ? (
             <h1>Loading...</h1>
         ) : (
@@ -136,16 +136,23 @@ function EventDetailPage() {
                 </div>
                 </div>
             </div>
-            <div hidden={!(event && event.attendees && user && (event.attendees.includes(user.id) || user.id === event.owner_id))}>
+            <div className="add-photos-div">
+                {imgArray.length !== 0 && (
+                <h2>Photos</h2>
+                )}
+                {user && user !== null && (event.attendees.includes(user.id) || user.id === event.owner_id) && (
                 <OpenModalButton
                     buttonText="Add a Photo"
                     onButtonClick={handleButtonClick}
                     className="clickable"
                     modalComponent={<AddEventImageModal />}
                 />
+                )}
             </div>
             <div>
-                <EventImages images={imgArray}/>
+                <div className="container-for-photos-grid">
+                    <EventImages images={imgArray}/>
+                </div>
             </div>
             </>
         )}

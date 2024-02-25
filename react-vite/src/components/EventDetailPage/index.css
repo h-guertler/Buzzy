@@ -1,3 +1,58 @@
 .image {
     height: 200px;
+    object-fit: cover;
+}
+
+.container-for-photos-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.photos-grid {
+    display: grid;
+    max-width: 870px;
+    min-width: 200px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.photo-username-div {
+    font-weight: 600;
+}
+
+.photo-buttons-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.photo-buttons-div>button {
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin-right: 7px;
+}
+
+.add-photos-div>button {
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin-right: 7px;
+    width: 10%;
+}
+
+.add-photos-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.add-photos-div>h2 {
+    margin-bottom: 5px;
+    margin-top: 7px;
 }

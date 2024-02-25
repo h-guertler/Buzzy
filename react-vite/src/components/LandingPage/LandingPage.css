@@ -10,3 +10,7 @@
     grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
     gap: 15px;
 }
+
+.landing-page-cover {
+    background-color: #F0F8FF;
+}
