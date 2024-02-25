@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/users/:userId",
-        element: <h1>users page, get userId from params</h1>
+        element: <ProfilePage/>
       },
       {
         path: "/events/:eventId",
