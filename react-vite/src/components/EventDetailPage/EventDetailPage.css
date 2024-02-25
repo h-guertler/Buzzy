@@ -63,3 +63,8 @@
 h1 {
     margin-top: 0px;
 }
+
+.detail-page-div {
+    background-color: #F0F8FF;
+    margin-top: -10px;
+}

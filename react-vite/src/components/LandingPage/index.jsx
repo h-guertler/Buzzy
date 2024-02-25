@@ -42,7 +42,7 @@ function LandingPage() {
   });
 
     return (
-      <div>
+      <div className="landing-page-cover">
         <h1>Events</h1>
         <div className="container-for-grid">
           <div className="events-grid">

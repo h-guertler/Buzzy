@@ -16,10 +16,11 @@ function EventImages (images) {
     const recentImgArray = imgArray.toReversed();
 
     const renderedImages = recentImgArray.map((image) =>(
-        <div key={image.id}>
+        <div key={image.id} className="rendered-img-div">
             <img className="image" src={image.url ? image.url : loadingplaceholderimg} alt="event image"/>
             <div className="event-images-buttons-div"
             hidden={!user || (user && user.id !== image.user_id)}>
+            <div className="photo-buttons-div">
             <OpenModalButton
                 buttonText="Edit Photo"
                 className="clickable"
@@ -31,13 +32,14 @@ function EventImages (images) {
                 modalComponent={<ConfirmDeleteEventImage eventImageId={image.id} deleteEventImage={fetchDeleteImage}/>}
             />
             </div>
+            </div>
             <div>{image.created_at ? sliceDate(image.created_at.toString()) : ""}</div>
-            <div>{image.username ? image.username : ""}</div>
+            <div className="photo-username-div">{image.username ? image.username : ""}</div>
         </div>
     ));
 
     return (
-        <div>
+        <div className="photos-grid">
             {renderedImages}
         </div>
     )
