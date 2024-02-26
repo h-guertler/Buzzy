@@ -1,0 +1,13 @@
+.container-for-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.events-grid {
+    display: grid;
+    max-width: 765px;
+    min-width: 225px;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    gap: 15px;
+    z-index: 0;
+}

@@ -33,13 +33,28 @@ def get_user_event_images(id):
         return error, 404
 
     # Queries for all of the user's event images
-    query = db.session.query(Event_Image) \
-        .filter(Event_Image.user_id == id) \
-        .all()
+    # query = db.session.query(Event_Image) \
+    #     .filter(Event_Image.user_id == id) \
+    #     .all()
 
-    images = [image.to_dict() for image in query]
+    query = db.session.query(Event_Image, Event.name) \
+            .join(Event, Event_Image.event_id == Event.id) \
+            .filter(Event_Image.user_id == id) \
+            .all()
 
-    return { "event images": images }
+    images_with_event_names = []
+
+    for event_image, name in query:
+        images_with_event_names.append({
+            "id": event_image.id,
+            "user_id": event_image.user_id,
+            "event_id": event_image.event_id,
+            "url": event_image.url,
+            "created_at": event_image.created_at,
+            "name": name
+        })
+
+    return { "event images": images_with_event_names }
 
 
 @user_routes.route('/current/events')

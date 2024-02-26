@@ -12,6 +12,7 @@ const DELETE_TAG = 'events/deleteTag';
 const EDIT_IMAGE = 'events/editImage';
 const REMOVE_ATTENDEE = 'events/removeAttendee';
 const UPDATE_EVENT = 'events/updateEvent';
+const GET_USER_EVENTS = 'events/getUserEvents';
 
 const getEvent = (event) => ({
     type: GET_EVENT,
@@ -21,6 +22,11 @@ const getEvent = (event) => ({
 const getAllEvents = (events) => ({
     type: GET_ALL_EVENTS,
     payload: events
+});
+
+const getUserEvents = (userEvents) => ({
+    type: GET_USER_EVENTS,
+    payload: userEvents
 });
 
 const deleteEvent = (id) => ({
@@ -102,6 +108,21 @@ export const fetchGetAllEvents = () => async (dispatch) => {
     } else {
         const data = await response.json();
         return data;
+    }
+};
+
+export const fetchGetUserEvents = () => async (dispatch) => {
+    const response = await fetch(`/api/users/current/events`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getUserEvents(data));
+    } else {
+        if (response) {
+            const data = await response.json();
+            return data;
+        } else {
+            return { "error": "error fetching user events" };
+        }
     }
 };
 
@@ -346,6 +367,9 @@ function eventsReducer(state = initialState, action) {
         }
         case GET_ALL_EVENTS: {
             return { ...state, events: action.payload };
+        }
+        case GET_USER_EVENTS: {
+            return { ...state, userEvents: action.payload };
         }
         case DELETE_EVENT: {
             return { ...state, events: state.events.events.filter(event => event.id != action.id)};
