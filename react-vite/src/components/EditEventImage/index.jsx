@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { fetchEditImage, fetchGetEvent, fetchGetEventImages } from "../../redux/events";
+import { fetchEditUserImage } from "../../redux/eventimages";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import whitesquare from "../../../src/whitesquare.jpg";
 import "./index.css";
 
-function EditEventImage({imageId}) {
+function EditEventImage({ imageId, editType }) {
     const dispatch = useDispatch();
     const { eventId } = useParams();
     const { closeModal } = useModal();
@@ -21,17 +22,30 @@ function EditEventImage({imageId}) {
 
         let res;
 
-        try {
-            res = await dispatch(fetchEditImage(imageId, imageInfo));
-            if (res && !res.url) {
-                setErrors(res);
-            } else {
-                await dispatch(fetchGetEvent(eventId));
-                await dispatch(fetchGetEventImages(eventId))
-                closeModal();
+        if (editType == "event-photos") {
+            try {
+                res = await dispatch(fetchEditImage(imageId, imageInfo));
+                if (res && !res.url) {
+                    setErrors(res);
+                } else {
+                    await dispatch(fetchGetEvent(eventId));
+                    await dispatch(fetchGetEventImages(eventId))
+                    closeModal();
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
+        } else {
+            try {
+                res = await dispatch(fetchEditUserImage(imageId, imageInfo));
+                if (res && !res.ok) {
+                    setErrors(res);
+                } else {
+                    closeModal();
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
     }
 

@@ -24,7 +24,7 @@ function EventImages (images) {
             <OpenModalButton
                 buttonText="Edit Photo"
                 className="clickable"
-                modalComponent={<EditEventImage imageId={image.id}/>}
+                modalComponent={<EditEventImage imageId={image.id} editType="event-photos" />}
             />
             <OpenModalButton
                 buttonText="Delete Photo"
@@ -39,7 +39,7 @@ function EventImages (images) {
     ));
 
     return (
-        <div className="photos-grid">
+        <div className="photos-grid-event-images">
             {renderedImages}
         </div>
     )

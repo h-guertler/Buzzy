@@ -150,7 +150,7 @@ function EventDetailPage() {
                 )}
             </div>
             <div>
-                <div className="container-for-photos-grid">
+                <div className="container-for-photos-grid-detail-page">
                     <EventImages images={imgArray}/>
                 </div>
             </div>
