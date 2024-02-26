@@ -1,6 +1,7 @@
 .profile-dropdown {
   position: absolute;
   right: 20px;
+  z-index: 3;
 }
 
 .nav-div {
@@ -115,7 +116,7 @@
   font-weight: 400;
   line-height: 22px;
   color: white;
-  background: #dafff8;
+  background: #1ABC9C;
   opacity: 1;
   border: 1px solid darkgrey;
   border-radius: 16px;

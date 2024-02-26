@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchGetUserEvents } from "../../redux/events";
+import { fetchGetUserImages } from "../../redux/eventimages";
 import "./ProfilePage.css";
 import UserEvents from "./UserEvents";
 import UserPhotos from "./UserPhotos";
@@ -17,21 +18,12 @@ function ProfilePage() {
 
     useEffect(() => {
         dispatch(fetchGetUserEvents());
+        dispatch(fetchGetUserImages(userId))
     }, [dispatch, userId]);
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
     }
-
-    // Photos
-
-    // should be an events section
-    // with event cards for all their events
-
-    // should be a photos section
-    // with all their photos
-    // Also list the event name??
-    // use EventImages.jsx from EventDetailPage
 
     return (
         <div>
@@ -47,10 +39,10 @@ function ProfilePage() {
                 </div>
                 <div className="tab-info">
                     {activeTab == "events" && (
-                        <UserEvents userId={userId} />
+                        <UserEvents />
                     )}
                     {activeTab == "photos" && (
-                        <UserPhotos userId={userId}/>
+                        <UserPhotos />
                     )}
                 </div>
             </div>

@@ -2,8 +2,8 @@ import EventCard from "../EventCard/EventCard";
 import { useSelector } from "react-redux";
 
 const UserEvents = () => {
-    const userEventsObj = useSelector((state) => state.events.userEvents);
-    const userEventsArray = userEventsObj["events"];
+    const userEventsObj = useSelector((state) => state.events && state.events.userEvents ? state.events.userEvents : {});
+    const userEventsArray = userEventsObj["events"] ? userEventsObj["events"] : [];
 
     const renderedEvents = userEventsArray.map((event) => (
         <EventCard event={event} key={event.id}/>
