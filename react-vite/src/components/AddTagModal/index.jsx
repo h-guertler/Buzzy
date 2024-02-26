@@ -41,6 +41,7 @@ function AddTagModal() {
             className="add-tag-form">
                 <h2>Add a Tag</h2>
                 <div>{errors}</div>
+                <p>2-10 characters</p>
                 <input
                     type="text"
                     value={tagInfo}

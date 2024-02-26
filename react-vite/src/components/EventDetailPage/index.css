@@ -3,12 +3,12 @@
     object-fit: cover;
 }
 
-.container-for-photos-grid {
+.container-for-photos-grid-detail-page {
     display: flex;
     justify-content: center;
 }
 
-.photos-grid {
+.photos-grid-event-images {
     display: grid;
     max-width: 870px;
     min-width: 200px;

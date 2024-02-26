@@ -40,7 +40,7 @@ function SignupFormModal() {
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1 id="sign-up-h1">Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
         <div className="label-div">
@@ -48,7 +48,7 @@ function SignupFormModal() {
           Email
           <input
             type="text"
-            id="email-input"
+            id="email-signup-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -61,7 +61,7 @@ function SignupFormModal() {
           Username
           <input
             type="text"
-            id="username-input"
+            id="username-signup-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -74,7 +74,7 @@ function SignupFormModal() {
           Password
           <input
             type="password"
-            id="password-input"
+            id="password-signup-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -87,7 +87,7 @@ function SignupFormModal() {
           Confirm Password
           <input
             type="password"
-            id="confirm-password-input"
+            id="confirm-password-signup-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required

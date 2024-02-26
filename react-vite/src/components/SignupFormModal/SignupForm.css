@@ -1,3 +1,7 @@
+#sign-up-h1 {
+    margin-top: 25px;
+}
+
 .label-div {
     width: 100%;
     margin-bottom: 15px;
@@ -7,18 +11,26 @@
     margin-left: 8px;
 }
 
-#email-input {
-    width: 79.5%;
+#email-signup-input {
+    width: 72%;
+    margin-left: 8px;
 }
 
-#username-input {
-    width: 72.2%;
+#username-signup-input {
+    width: 62.7%;
+    margin-left: 8px;
 }
 
-#password-input {
-    width: 71.5%;
+#password-signup-input {
+    width: 64%;
+    margin-left: 8px;
 }
 
-#confirm-password-input {
-    width: 57%;
+#confirm-password-signup-input {
+    width: 48%;
+    margin-left: 8px;
+}
+
+form {
+    padding-bottom: 20px;
 }

@@ -13,4 +13,10 @@
 
 .landing-page-cover {
     background-color: #F0F8FF;
+    margin-top: -8px;
+    border-top: 1px solid darkgray;
+}
+
+#events-heading {
+    padding-top: 10px;
 }
