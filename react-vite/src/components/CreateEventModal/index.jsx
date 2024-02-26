@@ -28,7 +28,6 @@ function CreateEventModal() {
     };
 
     const handleSubmit = async (e) => {
-        console.log("handling submit")
         e.stopPropagation();
         e.preventDefault();
 
@@ -56,8 +55,6 @@ function CreateEventModal() {
         } catch (error) {
             console.error(error)
         }
-
-        console.log("response: ", response)
     }
 
     return (
