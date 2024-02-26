@@ -153,13 +153,13 @@ function CreateEventModal() {
                     type="submit"
                     className={name.length < 2 ||
                         description.length < 10 ||
-                        description.length > 255 ||
+                        description.length > 500 ||
                         !location ||
                         (previewImage && !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg")))
                         ? "disabled" : "clickable"}
                     disabled={name.length < 2 ||
                         description.length < 10 ||
-                        description.length > 255 ||
+                        description.length > 500 ||
                         !location ||
                         (previewImage && !(previewImage.endsWith(".jpeg") || previewImage.endsWith(".jpg")))}
                     >
