@@ -11,3 +11,70 @@
     gap: 15px;
     z-index: 0;
 }
+
+.tab.active {
+    font-weight: 600;
+}
+
+.profile-tabs {
+    display: flex;
+    justify-content: center;
+}
+
+.tab {
+    width: 1fr;
+}
+
+.events-grid {
+    border-top: 2px solid darkgrey;
+    margin-top: 8px;
+}
+
+#events-tab {
+    padding-right: 7px;
+    border-right: 1px solid darkgray;
+}
+
+#photos-tab {
+    padding-left: 7px;
+    border-left: 1px solid darkgrey;
+}
+
+.rendered-image {
+    width: 200px;
+    object-fit: cover;
+}
+
+.rendered-img-div {
+    padding-top: 20px;
+}
+
+.container-for-photos-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.photos-grid {
+    display: grid;
+    max-width: 785px;
+    min-width: 210px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 15px;
+    border-top: 2px solid darkgrey;
+    margin-top: 8px;
+    padding-top: 8px;
+}
+
+.photo-buttons-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.photo-buttons-div>button {
+    color: white;
+    background: #1ABC9C;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin-right: 7px;
+}

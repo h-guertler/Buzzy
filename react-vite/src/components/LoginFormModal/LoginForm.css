@@ -5,6 +5,7 @@
 
 h1 {
     text-align: center;
+    margin-top: 20px;
 }
 
 .label-div {
@@ -13,18 +14,19 @@ h1 {
 }
 
 #email-login-input {
-    width: 72%;
+    width: 71.5%;
     margin-left: 8px;
 }
 
 #password-input {
     margin-left: 8px;
     width: 71%;
+    margin-bottom: 5px;
 }
 
 form>button {
-    margin-top: 12px;
-    margin-bottom: 14px;
+    margin-top: 14px;
+    margin-bottom: 12px;
     padding: 4px 7px;
     font-size: 16px;
     font-weight: 400;

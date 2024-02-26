@@ -13,13 +13,17 @@ function ProfilePage() {
 
     const user = useSelector((state) => state.session.user);
     const username = user && user.username ? user.username : "";
+    const imageArray = useSelector((state) => state.eventimages.userImages["event images"]);
+    const imageArrayLength = imageArray && imageArray.length ? imageArray.length : 0;
+    const eventArray = useSelector((state) => state.events.events["events"]);
+    const eventArrayLength = eventArray && eventArray.length ? eventArray.length : 0;
 
     const [activeTab, setActiveTab] = useState("events");
 
     useEffect(() => {
         dispatch(fetchGetUserEvents());
         dispatch(fetchGetUserImages(userId))
-    }, [dispatch, userId]);
+    }, [dispatch, userId, imageArrayLength, eventArrayLength]);
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
@@ -30,16 +34,18 @@ function ProfilePage() {
             <h1>{username}</h1>
             <div className="tabs-container">
                 <div className="profile-tabs">
-                    <div className={`${activeTab === "events" ? 'active' : ''}`} onClick={() => handleTabClick("events")}>
+                    <div id="events-tab" className={`clickable tab ${activeTab === "events" ? 'active' : ''}`} onClick={() => handleTabClick("events")}>
                         Events
                     </div>
-                    <div className={`${activeTab === "photos" ? 'active' : ''}`} onClick={() => handleTabClick("photos")}>
+                    <div id="photos-tab" className={`clickable tab ${activeTab === "photos" ? 'active' : ''}`} onClick={() => handleTabClick("photos")}>
                         Photos
                     </div>
                 </div>
                 <div className="tab-info">
                     {activeTab == "events" && (
-                        <UserEvents />
+                        <div className="events-div">
+                            <UserEvents />
+                        </div>
                     )}
                     {activeTab == "photos" && (
                         <UserPhotos />
