@@ -167,13 +167,13 @@ function UpdateEventModal(event) {
                 <button type="submit"
                 className={newName.length < 2 ||
                     newDescription.length < 10 ||
-                    newDescription.length > 255 ||
+                    newDescription.length > 500 ||
                     !newLocation ||
                     !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))
                     ? "disabled" : "clickable"}
                 disabled={name.length < 2 ||
                     description.length < 10 ||
-                    description.length > 255 ||
+                    description.length > 500 ||
                     !location ||
                     !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))}
                 >

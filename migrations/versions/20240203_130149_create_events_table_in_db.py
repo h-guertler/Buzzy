@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=40), nullable=False),
-    sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('location', sa.String(length=255), nullable=False),
     sa.Column('date_hosted', sa.DateTime(), nullable=False),
     sa.Column('attendees', sa.ARRAY(sa.Integer()), nullable=True),

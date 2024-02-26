@@ -134,8 +134,8 @@ def create_event():
 
     if name is None:
         validation_errors["name"] = "Please provide a name"
-    if description is None or len(description) < 10 or len(description) > 255:
-        validation_errors["description"] = "Please provide a description between 10 and 255 characters"
+    if description is None or len(description) < 10 or len(description) > 500:
+        validation_errors["description"] = "Please provide a description between 10 and 500 characters"
     if location is None:
         validation_errors["location"] = "Please provide a location"
     if date_hosted is None:
@@ -281,8 +281,8 @@ def get_event(id):
         # Backend validations
         validation_errors = {}
 
-        if new_description is not None and (len(new_description) < 10 or len(new_description) > 255):
-            validation_errors["description"] = "Please provide a description between 10 and 255 characters"
+        if new_description is not None and (len(new_description) < 10 or len(new_description) > 500):
+            validation_errors["description"] = "Please provide a description between 10 and 500 characters"
             return validation_errors, 500
 
         # Updates any fields which were provided in the request body

@@ -26,7 +26,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
     name = db.Column(db.String(40), nullable=False, unique=True)
-    description = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     date_hosted = db.Column(db.DateTime, nullable=False)
     attendees = db.Column(MutableList.as_mutable(db.ARRAY(db.Integer)))
