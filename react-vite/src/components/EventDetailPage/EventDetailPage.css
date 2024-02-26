@@ -17,6 +17,7 @@
 
 #image-date-place-div {
     flex: 1;
+    border-right: 1px solid darkgray;
 }
 
 #event-date-hosted {
@@ -25,10 +26,12 @@
 
 #description-div {
     flex: 1;
+    border-right: 1px solid darkgray;
 }
 
 #tag-div {
     flex: 1;
+    border-right: 1px solid darkgray;
 }
 
 #guest-div {
@@ -66,5 +69,5 @@ h1 {
 
 .detail-page-div {
     background-color: #F0F8FF;
-    margin-top: -10px;
+    padding-top: 10px;
 }
