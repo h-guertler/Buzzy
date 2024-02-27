@@ -42,3 +42,9 @@ form>button {
 button:hover {
     cursor: pointer;
 }
+
+#demo-login-button {
+    border: none;
+    background-color: white;
+    color: darkgray
+}
