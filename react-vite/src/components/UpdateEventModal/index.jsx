@@ -122,7 +122,7 @@ function UpdateEventModal(event) {
                     Location
                     <input
                         type="text"
-                        placeholder="Street address"
+                        placeholder="City, State"
                         id="location-input"
                         value={newLocation}
                         onChange={(e) => setNewLocation(e.target.value)}
