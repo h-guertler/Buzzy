@@ -79,7 +79,8 @@ label {
     margin-left: 8px;
 }
 
-.disabled {
+button.disabled {
     color: black;
     background-color: lightgrey;
+    cursor: not-allowed;
 }

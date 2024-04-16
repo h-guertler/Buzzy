@@ -15,6 +15,7 @@
     background-color: #F0F8FF;
     margin-top: -8px;
     border-top: 1px solid darkgray;
+    height: 100vh
 }
 
 #events-heading {

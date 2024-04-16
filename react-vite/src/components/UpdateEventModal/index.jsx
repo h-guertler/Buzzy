@@ -23,7 +23,7 @@ function UpdateEventModal(event) {
     const [newDateHosted, setNewDateHosted] = useState(origDate);
     const [newLocation, setNewLocation] = useState(location ? location : "");
     const [newPreviewImage, setNewPreviewImage] = useState(preview_image ? preview_image : "");
-    const [newPrivacy, setNewPrivacy] = useState(privacy ? privacy : true);
+    const [newPrivacy, setNewPrivacy] = useState(privacy ? privacy : false);
     const [isDisabled, setIsDisabled] = useState(true);
     const [errors, setErrors] = useState([]);
 
@@ -122,7 +122,7 @@ function UpdateEventModal(event) {
                     Location
                     <input
                         type="text"
-                        placeholder="Street address"
+                        placeholder="City, State"
                         id="location-input"
                         value={newLocation}
                         onChange={(e) => setNewLocation(e.target.value)}
@@ -167,13 +167,13 @@ function UpdateEventModal(event) {
                 <button type="submit"
                 className={newName.length < 2 ||
                     newDescription.length < 10 ||
-                    newDescription.length > 255 ||
+                    newDescription.length > 500 ||
                     !newLocation ||
                     !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))
                     ? "disabled" : "clickable"}
                 disabled={name.length < 2 ||
                     description.length < 10 ||
-                    description.length > 255 ||
+                    description.length > 500 ||
                     !location ||
                     !(newPreviewImage.endsWith(".jpeg") || newPreviewImage.endsWith(".jpg"))}
                 >
