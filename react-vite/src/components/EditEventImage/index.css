@@ -37,6 +37,7 @@
 
 #edit-image-button.disabledButton {
     background-color: lightgrey;
+    cursor: default;
 }
 
 h2 {
