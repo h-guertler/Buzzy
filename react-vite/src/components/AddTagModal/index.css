@@ -20,6 +20,7 @@
 
 #add-tag-button.disabledButton {
     background-color: lightgrey;
+    cursor: default;
 }
 
 .deletable-tags, .deletable-attendees {
