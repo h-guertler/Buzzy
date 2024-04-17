@@ -5,6 +5,7 @@ import EventDetailPage from '../components/EventDetailPage';
 import Layout from './Layout';
 import ProfilePage from "../components/ProfilePage";
 import LandingPage from '../components/LandingPage';
+import AboutPage from "../components/AboutPage/AboutPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <LandingPage />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />
       },
       {
         path: "login",

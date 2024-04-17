@@ -190,7 +190,7 @@ def add_or_remove_attendee(id):
 
         # Uses the submitted information to find a user, whose ID is then added to the event's attendees
         queried_user = db.session.query(User) \
-            .filter((User.email == user_info) | (User.username == user_info)) \
+            .filter((func.lower(User.email) == user_info.lower()) | (func.lower(User.username) == user_info.lower())) \
             .first()
 
         if queried_user:
