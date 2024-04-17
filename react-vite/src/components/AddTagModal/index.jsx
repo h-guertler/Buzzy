@@ -24,7 +24,7 @@ function AddTagModal() {
         try {
             res = await dispatch(fetchAddTag(tagInfo, eventId));
             if (res && !res.location) {
-                setErrors(res);
+                setErrors(res.error);
             } else {
                 await dispatch(fetchGetEvent(eventId));
                 closeModal();
@@ -41,7 +41,7 @@ function AddTagModal() {
             className="add-tag-form">
                 <h2>Add a Tag</h2>
                 <div>{errors}</div>
-                <p>2-10 characters</p>
+                <p>2-20 characters</p>
                 <input
                     type="text"
                     value={tagInfo}
@@ -51,7 +51,7 @@ function AddTagModal() {
                 <button
                     type="submit"
                     disabled={tagInfo.length < 2 || tagInfo.length > 20}
-                    className={tagInfo.length >= 2 && tagInfo.length < 20 ? "clickable" : "disabledButton"}
+                    className={tagInfo.length >= 2 && tagInfo.length <= 20 ? "clickable" : "disabledButton"}
                     id="add-tag-button">
                     Add
                 </button>

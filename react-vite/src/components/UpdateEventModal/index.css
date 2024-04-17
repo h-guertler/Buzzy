@@ -82,4 +82,5 @@ label {
 .disabled {
     color: black;
     background-color: lightgrey;
+    cursor: default;
 }

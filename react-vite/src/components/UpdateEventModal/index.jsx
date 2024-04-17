@@ -23,7 +23,7 @@ function UpdateEventModal(event) {
     const [newDateHosted, setNewDateHosted] = useState(origDate);
     const [newLocation, setNewLocation] = useState(location ? location : "");
     const [newPreviewImage, setNewPreviewImage] = useState(preview_image ? preview_image : "");
-    const [newPrivacy, setNewPrivacy] = useState(privacy ? privacy : true);
+    const [newPrivacy, setNewPrivacy] = useState(privacy ? privacy : false);
     const [isDisabled, setIsDisabled] = useState(true);
     const [errors, setErrors] = useState([]);
 
