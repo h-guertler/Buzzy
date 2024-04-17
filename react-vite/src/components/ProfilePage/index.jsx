@@ -30,7 +30,7 @@ function ProfilePage() {
     }
 
     return (
-        <div>
+        <div id="profile-div">
             <h1>{username}</h1>
             <div className="tabs-container">
                 <div className="profile-tabs">

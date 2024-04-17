@@ -2,3 +2,7 @@
 .clickable:hover {
     cursor: pointer;
 }
+
+body {
+    background-color: #F0F8FF;
+}
