@@ -1,8 +1,12 @@
 #about-link-div {
+    display: flex;
+    width: 100%;
     background-color: #F0F8FF;
-    margin-top: -20px;
+    padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
+    align-content: center;
+    justify-content: center;
 }
 
 #about-link {

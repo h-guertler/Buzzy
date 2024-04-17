@@ -1,3 +1,7 @@
+#profile-div {
+    background-color: #F0F8FF;
+}
+
 .container-for-grid {
     display: flex;
     justify-content: center;
