@@ -333,15 +333,13 @@ def add_or_remove_tag(id):
 
     # Returns an unauthorized message if the logged in user does not own the event
     if not event.owner_id == user_id:
-        message = "You are not authorized to edit this resource"
-        return message, 401
+        return jsonify({"error": "You are not authorized to edit this resource"}), 401
 
     # Add an event tag
     if request.method == "POST":
         tag = request.json.get("tag", None)
         if (tag == None) or (len(tag) < 2) or (len(tag) > 20):
-            message = "Please add a tag between 2 and 20 characters"
-            return message, 500
+            return jsonify({"error": "Please add a tag between 2 and 20 characters"}), 400
 
         if tag not in event.tags:
             event.tags.append(tag)
@@ -351,19 +349,17 @@ def add_or_remove_tag(id):
             event = Event.query.get(id)
             return event.to_dict()
         else:
-            message = "You have already added this event tag"
-            return message, 400
+            return jsonify({"error": "You have already added this event tag"}), 400
 
     # Delete an event tag
     if request.method == "DELETE":
         tag = request.json.get("tag", None)
         if tag == None:
-            message = "Please select a tag to remove"
-            return message, 500
+            return jsonify({"error": "Please select a tag to remove"}), 500
 
         if tag and tag not in event.tags:
-            message = "The event does not contain this tag"
-            return message, 400
+            return jsonify({"error": "The event does not contain this tag"}), 400
+
         else:
             event.tags = [ele for ele in event.tags if ele != tag]
             event.updated_at = datetime.utcnow()

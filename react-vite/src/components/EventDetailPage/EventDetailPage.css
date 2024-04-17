@@ -33,17 +33,21 @@
 #description-div {
     flex: 1;
     border-right: 1px solid darkgray;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #tag-div {
     flex: 1;
     border-right: 1px solid darkgray;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #guest-div {
     flex: 1;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .item-div {

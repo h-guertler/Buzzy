@@ -82,5 +82,5 @@ label {
 button.disabled {
     color: black;
     background-color: lightgrey;
-    cursor: not-allowed;
+    cursor: default;
 }
