@@ -49,7 +49,7 @@ Buzzy is an event planning site with a social media flare. Users can create, vie
 - Authenticated users can manage images they own by making updates and/or deleting
 - Authenticated users can invite other users to events they own
 - Authenticated users can add tags to events they own
-- Authenticated users can manage tags of events they own by making updates and/or deleting
+- Authenticated users can manage tags of events they own by deleting
 - Authenticated users can manage guests of events they own by deleting
 - Authenticated users can view their events on their user profile
 - Authenticated users can view their images on their user profile
