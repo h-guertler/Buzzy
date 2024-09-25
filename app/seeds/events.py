@@ -30,7 +30,7 @@ def seed_events():
         date_hosted="2024-12-31 21:00:00.000000",
         attendees=[2],
         tags=["board games", "casual", "potluck", "collab playlist"],
-        preview_image="https://asheville.incredibletowns.com/wp-content/uploads/2019/12/Happy-New-Year.jpg",
+        preview_image="https://www.ontariosciencecentre.ca/media/2093/fireworkscircle3.jpg",
         private=False)
 
     db.session.add(craft_show)
